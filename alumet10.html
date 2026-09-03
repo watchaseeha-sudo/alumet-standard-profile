@@ -528,23 +528,27 @@ return "M "+(x-11*d)+" "+(y-4)+" L "+(x+3*d)+" "+(y-4)+" L "+(x+3*d)+" "+(y-9)+
 " L "+(x-11*d)+" "+(y+4)+" Z";
 }
 function uDg() {
-  var W = parseFloat(g("W").value) || 150;
-  var H = parseFloat(g("H").value) || 100;
+  // ล็อกขนาดไว้ที่ 400px ไม่ต้องขยายตาม input
+  var vbW = 500;
+  var vbH = 300;
   
-  // ปรับ VW ให้เล็กลงเป็น 300 (ค่าเดิมน่าจะ 440+)
-  var VW = 500; 
-  // ปรับ VH ตามสัดส่วนกว้าง/สูง ให้มีความสูงที่เหมาะสม (เช่น 120-150)
-  var VH = Math.round(VW * (H / W));
-  if (VH < 120) VH = 120; // ให้สูงอย่างน้อย 120 เพื่อไม่ให้รูปแบนเกินไป
+  // เนื้อหา SVG
+  var svgContent = `
+    <rect x="10" y="50" width="480" height="200" fill="#f0f0f0" />
+    <text x="250" y="150" font-size="40" text-anchor="middle" fill="#333">ALUMET</text>
+    <rect x="50" y="200" width="100" height="50" fill="#5D9CEC" />
+    <rect x="350" y="200" width="100" height="50" fill="#5D9CEC" />
+  `;
 
-  var m = 10; // ลดขอบ (Margin) จาก 10 เหลือ 5 เพื่อให้รูปใช้พื้นที่ได้เต็มขึ้น
-  var t = 10; // ลดระยะขอบใน (Padding)
-  
-  var ax = m + t, ay = m + t, aw = VW - 2 * (m + t), ah = VH - 2 * (m + t);
-  var cy = ay + ah / 2;
-  
-  var s = '<svg viewBox="0 0 ' + VW + ' ' + VH + '" class="dgs" style="max-width: 320px;">'; // บังคับขนาดสูงสุดที่ 320px
-  // ... (ส่วนการวาดต่อจากนี้ใช้โค้ดเดิมของคุณได้เลย)
+  // ใส่ใน div ที่ล็อกขนาดไว้ 400px
+  g("dg").innerHTML = `
+    <div style="width: 400px; margin: 0 auto;">
+      <svg viewBox="0 0 ${vbW} ${vbH}" style="width: 100%; display: block;">
+        ${svgContent}
+      </svg>
+    </div>
+  `;
+}
 s+='<rect x="'+m+'" y="'+m+'" width="'+(VW-2*m)+'" height="'+(VH-2*m)+'" rx="3" fill="#fff" stroke="#4a5560" stroke-width="2"/>';
 s+='<rect x="'+ax+'" y="'+ay+'" width="'+aw+'" height="'+ah+'" fill="#fff" stroke="#4a5560" stroke-width="1.2"/>';
 var cap="";
