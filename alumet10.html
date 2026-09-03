@@ -4,16 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ถอดแบบงานอลูมิเนียม ALUMET</title>
-<style>.dgs-container {
-
-  width: 100%;
-
-  max-width: 400px; /* ปรับขนาดตรงนี้: ถ้าอยากได้ใหญ่กว่าเดิมนิดหน่อยให้เพิ่มเลขนี้ครับ */
-
-  margin: 20px auto;
-
-  border: 1px solid #ddd; /* ใส่ไว้ดูกรอบ */
-
+<style>
 }
 
 
@@ -528,26 +519,34 @@ return "M "+(x-11*d)+" "+(y-4)+" L "+(x+3*d)+" "+(y-4)+" L "+(x+3*d)+" "+(y-9)+
 " L "+(x-11*d)+" "+(y+4)+" Z";
 }
 function uDg() {
-  // ล็อกขนาดไว้ที่ 400px ไม่ต้องขยายตาม input
-  var vbW = 500;
-  var vbH = 300;
-  
+
   // เนื้อหา SVG
+
   var svgContent = `
+
     <rect x="10" y="50" width="480" height="200" fill="#f0f0f0" />
+
     <text x="250" y="150" font-size="40" text-anchor="middle" fill="#333">ALUMET</text>
+
     <rect x="50" y="200" width="100" height="50" fill="#5D9CEC" />
+
     <rect x="350" y="200" width="100" height="50" fill="#5D9CEC" />
+
   `;
 
-  // ใส่ใน div ที่ล็อกขนาดไว้ 400px
+
+  // ล็อกขนาดไว้ที่ 400x240px แบบตายตัว ไม่ใช้ %
+
   g("dg").innerHTML = `
-    <div style="width: 400px; margin: 0 auto;">
-      <svg viewBox="0 0 ${vbW} ${vbH}" style="width: 100%; display: block;">
-        ${svgContent}
-      </svg>
-    </div>
+
+    <svg width="400" height="240" viewBox="0 0 500 300" style="display: block; margin: 0 auto;">
+
+      ${svgContent}
+
+    </svg>
+
   `;
+
 }
 s+='<rect x="'+m+'" y="'+m+'" width="'+(VW-2*m)+'" height="'+(VH-2*m)+'" rx="3" fill="#fff" stroke="#4a5560" stroke-width="2"/>';
 s+='<rect x="'+ax+'" y="'+ay+'" width="'+aw+'" height="'+ah+'" fill="#fff" stroke="#4a5560" stroke-width="1.2"/>';
