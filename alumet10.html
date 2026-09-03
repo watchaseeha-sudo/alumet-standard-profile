@@ -507,10 +507,10 @@ return "M "+(x-11*d)+" "+(y-4)+" L "+(x+3*d)+" "+(y-4)+" L "+(x+3*d)+" "+(y-9)+
 " L "+(x-11*d)+" "+(y+4)+" Z";
 }
 function uDg(){
-var W=parseFloat(g("W").value)||50;
-var H=parseFloat(g("H").value)||30;
-var VW=440;
-var VH=Math.round(Math.max(150,Math.min(300,VW*(H/W))));
+var W=parseFloat(g("W").value)||150;
+var H=parseFloat(g("H").value)||100;
+var VW=100;
+var VH=Math.round(Math.max(50,Math.min(150,VW*(H/W))));
 var m=10,t=7;
 var ax=m+t,ay=m+t,aw=VW-2*(m+t),ah=VH-2*(m+t);
 var cy=ay+ah/2;
