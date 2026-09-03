@@ -5,282 +5,333 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ถอดแบบงานอลูมิเนียม ALUMET</title>
 <style>
+:root{
+  --pri:#1860a8;--pri-soft:#eef4fb;--pri-dk:#0f4a87;
+  --bg:#f6f7f9;--card:#fff;
+  --tx:#1a1d21;--tx2:#6b7280;--tx3:#9aa1ab;--line:#e6e8ec;
+  --r:10px;--sh:0 1px 2px rgba(16,24,40,.05);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;font-size:16px;background:#f0f2f5;color:#222;padding:20px}
-h1{font-size:22px;font-weight:700;margin-bottom:16px;color:#1860a8}
-h2{font-size:17px;font-weight:700;color:#1860a8;margin-bottom:12px}
+body{background:var(--bg);color:var(--tx);padding:16px;
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Thai","Sarabun",sans-serif}
+h1{font-size:20px;font-weight:600;margin-bottom:16px}
+h2{font-size:14px;font-weight:600;color:var(--tx2);margin-bottom:8px}
 .page{display:none}.page.show{display:block}
-.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;margin-bottom:16px}
-.sl{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+
+/* การ์ด + หัวข้อย่อย */
+.card{background:var(--card);border:0;border-radius:var(--r);
+  padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+.sl{font-size:12px;font-weight:600;color:var(--tx3);
+  letter-spacing:.04em;margin-bottom:12px}
+
 /* ประเภทบาน */
-.cat-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.cat-tab{padding:10px 20px;border-radius:8px;border:2px solid #ccc;background:#fff;font-size:15px;cursor:pointer;font-family:inherit;font-weight:600}
-.cat-tab:hover{border-color:#1860a8;background:#f0f7ff}
-.cat-tab.on{border-color:#1860a8;background:#1860a8;color:#fff}
-.tg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
-.tb{padding:14px 6px;border-radius:8px;border:2px solid #ccc;background:#fff;font-size:14px;cursor:pointer;text-align:center;font-family:inherit;line-height:1.4}
-.tb:hover{border-color:#1860a8;background:#f0f7ff}
-.tb.on{border-color:#1860a8;background:#dff0ff;color:#0a3d7c;font-weight:700}
-/* grid */
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
-.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:14px}
-.g5{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px}
-/* fields */
-.fd{display:flex;flex-direction:column;gap:6px}
-.fd label{font-size:13px;color:#555;font-weight:600}
-.fd input,.fd select{height:44px;padding:0 12px;border-radius:8px;border:2px solid #ccc;font-size:15px;font-family:inherit;width:100%}
-.fd input:focus,.fd select:focus{outline:none;border-color:#1860a8}
-/* diagram */
-.dg{display:flex;border:2px solid #bbb;border-radius:8px;overflow:hidden;height:66px;margin-bottom:14px}
-.dr{background:#e0e0e0;width:16px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#888;writing-mode:vertical-rl}
-.dp{flex:1;display:flex;align-items:center;justify-content:center;border-left:1px solid #bbb;flex-direction:column;gap:2px}
-.dp.ds{background:#dff0ff}.dp.df{background:#fff5e0}
-.dw{font-size:14px;font-weight:700}.dt{font-size:11px;color:#888}
-/* hint */
-.ht{font-size:14px;color:#333;padding:12px 16px;background:#f0f7ff;border-radius:8px;border-left:4px solid #1860a8;margin-bottom:14px;line-height:1.9}
-/* frame grid */
-.fg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
-.fc{background:#f7f9fc;border:2px solid #e0e0e0;border-radius:8px;padding:12px}
-.fl{font-size:13px;font-weight:700;color:#444;margin-bottom:8px}
-.fc select{width:100%;height:40px;padding:0 10px;border-radius:6px;border:2px solid #ccc;font-size:13px;font-family:inherit;margin-bottom:6px}
-.fw{font-size:12px;color:#1860a8;font-weight:600;min-height:18px}
-/* thick */
-.tg2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.tc{background:#f7f9fc;border:2px solid #e0e0e0;border-radius:8px;padding:14px}
-.tc .fl{font-size:14px;font-weight:700;color:#333;margin-bottom:10px}
-.tc select{width:100%;height:42px;padding:0 10px;border-radius:6px;border:2px solid #ccc;font-size:14px;font-family:inherit;margin-bottom:8px}
-.tc .info{font-size:12px;color:#666;line-height:1.9}
-/* item list */
-.item-list{margin-bottom:14px}
-.item-row{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#f7f9fc;border:2px solid #e0e0e0;border-radius:8px;margin-bottom:10px}
-.item-no{font-size:20px;font-weight:700;color:#1860a8;min-width:32px}
-.item-info{flex:1;line-height:1.9;font-size:14px}
-.item-del{height:38px;padding:0 14px;border-radius:6px;border:2px solid #ffaaaa;background:#fff5f5;color:#cc0000;font-size:14px;cursor:pointer;font-family:inherit}
-.item-del:hover{background:#ffdddd}
-/* buttons */
-.btn-add{width:100%;height:52px;border-radius:8px;border:2px dashed #1860a8;background:#f0f7ff;color:#1860a8;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px}
-.btn-add:hover{background:#dff0ff}
-.bc{width:100%;height:56px;border-radius:8px;border:none;background:#1860a8;color:#fff;font-size:19px;font-weight:700;cursor:pointer;font-family:inherit}
-.bc:hover{background:#0f4a87}.bc:active{transform:scale(.98)}
-/* result */
-.bk{height:48px;padding:0 24px;border-radius:8px;border:2px solid #1860a8;background:#fff;color:#1860a8;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:16px}
-.bk:hover{background:#f0f7ff}
-.ms{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.me{background:#1860a8;border-radius:10px;padding:16px 18px}
-.ml{font-size:12px;color:#a8d0ff;margin-bottom:4px;font-weight:600}
-.mv{font-size:22px;font-weight:700;color:#fff}
-.mb{font-size:13px;color:#a8d0ff;margin-top:2px}
-.ts{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.ta{padding:10px 20px;border-radius:8px;border:2px solid #ccc;background:#fff;color:#777;font-size:15px;cursor:pointer;font-family:inherit;font-weight:600}
-.ta.on{background:#dff0ff;color:#0a3d7c;border-color:#1860a8}
+.cat-tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.cat-tab{padding:9px 18px;border-radius:8px;border:1px solid var(--line);
+  background:#fff;color:var(--tx2);font-size:14px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:all .15s}
+.cat-tab:hover{border-color:var(--pri);color:var(--pri)}
+.cat-tab.on{border-color:var(--pri);background:var(--pri);color:#fff}
+.tg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.tb{padding:12px 6px;border-radius:8px;border:1px solid var(--line);
+  background:#fff;color:var(--tx2);font-size:13px;cursor:pointer;
+  text-align:center;font-family:inherit;line-height:1.4;transition:all .15s}
+.tb:hover{border-color:var(--pri);color:var(--pri)}
+.tb.on{border-color:var(--pri);background:var(--pri-soft);color:var(--pri);font-weight:600}
+
+/* กริด */
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:12px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px}
+
+/* ฟิลด์ */
+.fd{display:flex;flex-direction:column;gap:4px}
+.fd label{font-size:12px;color:var(--tx2);font-weight:500}
+.fd input,.fd select{height:42px;padding:0 12px;border-radius:8px;
+  border:1px solid var(--line);background:#fff;color:var(--tx);
+  font-size:15px;font-family:inherit;width:100%;
+  transition:border-color .15s,box-shadow .15s}
+.fd input:focus,.fd select:focus,select:focus,input:focus{outline:none;
+  border-color:var(--pri);box-shadow:0 0 0 3px rgba(24,96,168,.12)}
+
+/* ไดอะแกรม */
+.dg{display:flex;border:1px solid var(--line);border-radius:8px;
+  overflow:hidden;height:64px;margin-bottom:12px;background:#fff}
+.dr{background:#f0f1f3;width:16px;display:flex;align-items:center;
+  justify-content:center;font-size:9px;color:var(--tx3);writing-mode:vertical-rl}
+.dp{flex:1;display:flex;align-items:center;justify-content:center;
+  border-left:1px solid var(--line);flex-direction:column;gap:2px}
+.dp.ds{background:var(--pri-soft)}
+.dp.df{background:#fdf6e8}
+.dw{font-size:14px;font-weight:600}
+.dt{font-size:11px;color:var(--tx2)}
+
+/* คำอธิบายสูตร */
+.ht{font-size:13px;color:var(--tx2);padding:12px 14px;background:var(--pri-soft);
+  border-radius:8px;margin-bottom:12px;line-height:1.8}
+
+/* เลือกเฟรม */
+.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.fc{background:var(--bg);border:0;border-radius:8px;padding:12px}
+.fl{font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:6px}
+.fc select{width:100%;height:40px;padding:0 10px;border-radius:8px;
+  border:1px solid var(--line);background:#fff;font-size:13px;
+  font-family:inherit;margin-bottom:6px}
+.fw{font-size:12px;color:var(--pri);font-weight:600;min-height:18px}
+
+/* ความหนาเส้น */
+.tg2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:12px}
+.tc{background:var(--bg);border:0;border-radius:8px;padding:14px}
+.tc .fl{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:8px}
+.tc select{width:100%;height:42px;padding:0 10px;border-radius:8px;
+  border:1px solid var(--line);background:#fff;font-size:14px;
+  font-family:inherit;margin-bottom:8px}
+.tc .info{font-size:12px;color:var(--tx2);line-height:1.9}
+
+/* รายการที่เพิ่มแล้ว */
+.item-list{margin-bottom:4px}
+.item-row{display:flex;align-items:center;gap:12px;padding:12px 0;
+  background:transparent;border:0;border-bottom:1px solid var(--line)}
+.item-row:last-child{border-bottom:0}
+.item-no{width:26px;height:26px;border-radius:50%;background:var(--pri-soft);
+  color:var(--pri);font-size:12px;font-weight:600;flex:0 0 auto;
+  min-width:26px;display:flex;align-items:center;justify-content:center}
+.item-info{flex:1;min-width:0;line-height:1.6;font-size:14px}
+.item-del{height:32px;padding:0 10px;border-radius:6px;border:0;
+  background:transparent;color:#c0392b;font-size:13px;cursor:pointer;
+  font-family:inherit;transition:background .15s}
+.item-del:hover{background:#fdecea}
+
+/* ปุ่ม */
+.btn-add{width:100%;height:46px;border-radius:8px;border:0;
+  background:var(--pri-soft);color:var(--pri);font-size:16px;font-weight:600;
+  cursor:pointer;font-family:inherit;margin-bottom:10px;transition:opacity .15s}
+.btn-add:hover{opacity:.85}
+.bc{width:100%;height:48px;border-radius:8px;border:none;background:var(--pri);
+  color:#fff;font-size:16px;font-weight:600;cursor:pointer;font-family:inherit}
+.bc:hover{background:var(--pri-dk)}
+.bc:active{opacity:.9}
+
+/* หน้าผลลัพธ์ */
+.bk{height:40px;padding:0 16px;border-radius:8px;border:0;background:transparent;
+  color:var(--pri);font-size:15px;font-weight:600;cursor:pointer;
+  font-family:inherit;margin-bottom:12px}
+.bk:hover{background:var(--pri-soft)}
+.job-title{font-size:20px;font-weight:600;margin-bottom:2px}
+.job-sub{font-size:13px;color:var(--tx2);margin-bottom:16px}
+.ms{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.me{background:var(--card);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh)}
+.ml{font-size:12px;color:var(--tx2);margin-bottom:4px;font-weight:500}
+.mv{font-size:20px;font-weight:600;color:var(--tx)}
+.mb{font-size:13px;color:var(--pri);margin-top:2px;font-weight:600}
+.ts{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.ta{padding:9px 18px;border-radius:8px;border:1px solid var(--line);
+  background:#fff;color:var(--tx2);font-size:14px;cursor:pointer;
+  font-family:inherit;font-weight:600;transition:all .15s}
+.ta:hover{border-color:var(--pri);color:var(--pri)}
+.ta.on{background:var(--pri-soft);color:var(--pri);border-color:var(--pri)}
+
+/* ตาราง */
 table{width:100%;border-collapse:collapse;font-size:14px}
-th{text-align:left;font-weight:700;color:#555;border-bottom:2px solid #e0e0e0;padding:10px 8px;font-size:13px;background:#f7f9fc}
-td{padding:9px 8px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+th{text-align:left;font-weight:600;color:var(--tx2);font-size:12px;
+  background:transparent;border-bottom:1px solid var(--line);padding:10px 8px}
+td{padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
 tr:last-child td{border-bottom:none}
-.tfr td{font-weight:700;background:#f0f7ff;padding:11px 8px;font-size:15px}
-.fb2{background:#f7f9fc;border-radius:8px;padding:14px 18px;margin-bottom:14px;font-size:14px;color:#444;line-height:2.1;border-left:4px solid #1860a8}
-.fb2 b{color:#1860a8}
-.pr{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;font-size:16px}
+th:nth-child(n+3),td:nth-child(n+3){text-align:right}
+.tfr td{font-weight:600;background:var(--pri-soft);color:var(--pri);
+  padding:12px 8px;font-size:14px;border:0}
+
+/* กล่องสูตร / ราคา */
+.fb2{background:var(--bg);border-radius:8px;padding:12px 14px;margin-bottom:12px;
+  font-size:13px;color:var(--tx2);line-height:1.9;border:0}
+.fb2 b{color:var(--tx);font-weight:600}
+.pr{display:flex;justify-content:space-between;padding:11px 0;
+  border-bottom:1px solid var(--line);font-size:15px}
 .pr:last-child{border-bottom:none}
-.tr2{display:flex;justify-content:space-between;padding:14px 0 4px;margin-top:8px;border-top:2px solid #1860a8}
-.gb{background:#dff0ff;border:2px solid #1860a8;border-radius:8px;padding:12px 16px;margin-bottom:10px;font-size:15px;color:#0a3d7c;font-weight:600}
-.go{border:1px solid #e0e0e0;border-radius:6px;padding:9px 14px;margin-bottom:6px;font-size:14px}
-.st{font-size:18px;font-weight:700;color:#1860a8;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #dff0ff}
-.item-header{background:#1860a8;color:#fff;border-radius:8px;padding:10px 16px;font-size:15px;font-weight:700;margin-bottom:10px}
-.job-title{font-size:20px;font-weight:700;color:#1860a8;margin-bottom:4px}
-.job-sub{font-size:14px;color:#888;margin-bottom:16px}
+.tr2{display:flex;justify-content:space-between;align-items:baseline;
+  padding:14px 0 4px;margin-top:8px;border-top:1px solid var(--line)}
+
+/* กระจก */
+.gb{background:var(--pri-soft);border:0;border-radius:8px;padding:11px 14px;
+  margin-bottom:8px;font-size:14px;color:var(--pri);font-weight:600}
+.go{border:0;background:var(--bg);border-radius:8px;padding:9px 14px;
+  margin-bottom:6px;font-size:13px;color:var(--tx2)}
+.st{font-size:16px;font-weight:600;color:var(--tx);margin-bottom:12px;
+  padding-bottom:10px;border-bottom:1px solid var(--line)}
+.item-header{background:var(--pri-soft);color:var(--pri);border-radius:8px;
+  padding:10px 14px;font-size:14px;font-weight:600;margin-bottom:10px}
+
+/* จอเล็ก */
+@media(max-width:640px){
+  body{padding:12px}
+  .ms{grid-template-columns:repeat(2,1fr)}
+  .tg{grid-template-columns:repeat(2,1fr)}
+  .g3,.g4,.g5,.fg,.tg2{grid-template-columns:repeat(2,1fr)}
+  table{font-size:13px}
+  th,td{padding:9px 6px}
+}
 </style>
 </head>
 <body>
-
 <!-- หน้ากรอกข้อมูล -->
 <div class="page show" id="pg-in">
 <h1>ถอดแบบงานอลูมิเนียม ALUMET</h1>
-
 <!-- 1. ชื่องาน -->
 <div class="card">
-  <div class="sl">ข้อมูลงาน</div>
-  <div class="fd"><label>ชื่องาน</label><input type="text" id="JN" placeholder="เช่น บ้านคุณสมชาย"></div>
-  <div class="fd" style="margin-top:10px"><label>ชื่อชุดที่จะเพิ่ม</label><input type="text" id="INAME" placeholder="เช่น ห้องนอน, ห้องนั่งเล่น"></div>
+<div class="sl">ข้อมูลงาน</div>
+<div class="fd"><label>ชื่องาน</label><input type="text" id="JN" placeholder="เช่น บ้านคุณสมชาย"></div>
+<div class="fd" style="margin-top:10px"><label>ชื่อชุดที่จะเพิ่ม</label><input type="text" id="INAME" placeholder="เช่น ห้องนอน, ห้องนั่งเล่น"></div>
 </div>
-
 <!-- 2. สีอลูมิเนียม / 3. สีกระจก -->
 <div class="card">
-  <div class="sl">สีและวัสดุ</div>
-  <div class="g3">
-    <div class="fd"><label>สีอลูมิเนียม</label>
-      <select id="COL">
-        <option value="p">สีอบขาว (พ่น)</option>
-        <option value="p">สีขาวฟ้า (พ่น)</option>
-        <option value="p">สีดำพ่น</option>
-        <option value="a">สีดำชุบ</option>
-        <option value="a">สีชา (ชุบ)</option>
-        <option value="a">สีอลูมิเนียม (ชุบ)</option>
-      </select>
-    </div>
-    <div class="fd"><label>สีกระจก</label>
-      <select id="GCOL">
-        <option value="clear">กระจกใส</option>
-        <option value="green">กระจกเขียวใส</option>
-        <option value="bronze">กระจกชา</option>
-        <option value="frosted">กระจกฝ้า</option>
-        <option value="oneway">กระจกวันเวย์</option>
-        <option value="blue">กระจกฟ้าใส</option>
-      </select>
-    </div>
-    <div class="fd"><label>ความหนากระจก</label>
-      <select id="GTHK">
-        <option value="5">5 มม.</option>
-        <option value="6" selected>6 มม.</option>
-        <option value="8">8 มม.</option>
-        <option value="10">10 มม.</option>
-        <option value="12">12 มม.</option>
-      </select>
-    </div>
-  </div>
+<div class="sl">สีและวัสดุ</div>
+<div class="g3">
+<div class="fd"><label>สีอลูมิเนียม</label>
+<select id="COL">
+<option value="p">สีอบขาว (พ่น)</option>
+<option value="p">สีขาวฟ้า (พ่น)</option>
+<option value="p">สีดำพ่น</option>
+<option value="a">สีดำชุบ</option>
+<option value="a">สีชา (ชุบ)</option>
+<option value="a">สีอลูมิเนียม (ชุบ)</option>
+</select>
 </div>
-
-<!-- 4. หมวดบาน + ประเภท + ขนาด + เฟรม -->
+<div class="fd"><label>สีกระจก</label>
+<select id="GCOL">
+<option value="clear">กระจกใส</option>
+<option value="green">กระจกเขียวใส</option>
+<option value="bronze">กระจกชา</option>
+<option value="frosted">กระจกฝ้า</option>
+<option value="oneway">กระจกวันเวย์</option>
+<option value="blue">กระจกฟ้าใส</option>
+</select>
+</div>
+<div class="fd"><label>ความหนากระจก</label>
+<select id="GTHK">
+<option value="5">5 มม.</option>
+<option value="6" selected>6 มม.</option>
+<option value="8">8 มม.</option>
+<option value="10">10 มม.</option>
+<option value="12">12 มม.</option>
+</select>
+</div>
+</div>
+</div>
+<!-- 4. ประเภทบาน -->
 <div class="card">
-  <div class="sl">ประเภทบาน</div>
-  <div class="cat-tabs">
-    <button class="cat-tab on" data-cat="slide">บานเลื่อน</button>
-    <button class="cat-tab" data-cat="swing">บานสวิง</button>
-  </div>
-  <div id="type-area">
-    <div class="tg" id="tg"></div>
-  </div>
-  <!-- บานสวิง -->
-  <div id="swing-area" style="display:none">
-    <div class="tg" id="tg-swing"></div>
-    <!-- ตัวเลือกเพิ่มเติมสำหรับบานสวิง+ช่องแสง -->
-    <div id="light-options" style="display:none;margin-bottom:14px">
-      <div class="g3" style="margin-bottom:10px">
-        <div class="fd"><label>ความสูงบานสวิง (ซม.)</label>
-          <input type="number" id="swDoorH" value="200" min="100" step="1" oninput="updLightH()">
-        </div>
-        <div class="fd"><label>ความสูงช่องแสง (ซม.)</label>
-          <input type="number" id="swLightH" readonly style="background:#f5f5f5;color:#888">
-        </div>
-        <div class="fd" id="mid-type-fd" style="display:none"><label>เส้นกลางช่องแสง (บานคู่)</label>
-          <select id="swMidType">
-            <option value="groove">กล่องร่อง + ตบร่อง (3012+3014)</option>
-            <option value="flat">กล่องเรียบ + ตบเรียบ (3013+3015)</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="tg2" style="margin-top:12px">
-      <div class="tc">
-        <div class="fl">ความหนากล่อง/เสา</div>
-        <select id="thSW1"></select>
-        <div class="info" id="infoSW1"></div>
-      </div>
-      <div class="tc">
-        <div class="fl">ความหนาคิ้วประตู (3020)</div>
-        <select id="thSW2"></select>
-        <div class="info" id="infoSW2"></div>
-      </div>
-    </div>
-  </div>
-  <div id="dg"></div>
-  <div id="hi"></div>
+<div class="sl">ประเภทบาน</div>
+<div class="cat-tabs">
+<button class="cat-tab on" data-cat="slide">บานเลื่อน</button>
+<button class="cat-tab" data-cat="swing">บานสวิง</button>
 </div>
-
-<!-- เลือกเฟรม -->
+<div id="type-area">
+<div class="tg" id="tg"></div>
+</div>
+<!-- บานสวิง -->
+<div id="swing-area" style="display:none">
+<div class="tg" id="tg-swing"></div>
+<div class="tg2" style="margin-top:12px">
+<div class="tc">
+<div class="fl">ความหนากล่อง/เสา</div>
+<select id="thSW1"></select>
+<div class="info" id="infoSW1"></div>
+</div>
+<div class="tc">
+<div class="fl">ความหนาคิ้วประตู (3020)</div>
+<select id="thSW2"></select>
+<div class="info" id="infoSW2"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- 5. ขนาดช่องและจำนวน + รูปจำลอง -->
+<div class="card">
+<div class="sl">ขนาดช่องและจำนวน</div>
+<div class="g3">
+<div class="fd"><label>กว้างช่อง (ซม.)</label>
+<input type="number" id="W" min="30" step="0.1" placeholder="กว้าง (ซม.)" oninput="uDg();rHint()">
+</div>
+<div class="fd"><label>สูงช่อง (ซม.)</label>
+<input type="number" id="H" min="30" step="0.1" placeholder="สูง (ซม.)" oninput="uDg();rHint()">
+</div>
+<div class="fd"><label>จำนวนชุด</label>
+<input type="number" id="QT" min="1" placeholder="จำนวนชุด">
+</div>
+</div>
+<div id="dg"></div>
+<div id="hi"></div>
+</div>
+<!-- 6. เลือกเฟรม -->
 <div class="card" id="frame-card">
-  <div class="sl">เลือกเฟรม</div>
-  <div class="fg">
-    <div class="fc">
-      <div class="fl">เฟรมบน</div>
-      <select id="sft"></select>
-      <div class="fw" id="wft"></div>
-    </div>
-    <div class="fc">
-      <div class="fl">เฟรมล่าง</div>
-      <select id="sfb"></select>
-      <div class="fw" id="wfb"></div>
-    </div>
-    <div class="fc">
-      <div class="fl">เฟรมข้าง</div>
-      <select id="sfs"></select>
-      <div class="fw" id="wfs"></div>
-    </div>
-  </div>
+<div class="sl">เลือกเฟรม</div>
+<div class="fg">
+<div class="fc">
+<div class="fl">เฟรมบน</div>
+<select id="sft"></select>
+<div class="fw" id="wft"></div>
 </div>
-
-<!-- 5. ความหนาเส้น -->
+<div class="fc">
+<div class="fl">เฟรมล่าง</div>
+<select id="sfb"></select>
+<div class="fw" id="wfb"></div>
+</div>
+<div class="fc">
+<div class="fl">เฟรมข้าง</div>
+<select id="sfs"></select>
+<div class="fw" id="wfs"></div>
+</div>
+</div>
+</div>
+<!-- 5. ขนาดช่องและจำนวน -->
 <div class="card">
-  <div class="sl">ขนาดช่องและจำนวน</div>
-  <div class="g3">
-    <div class="fd"><label>กว้างช่อง (ซม.)</label>
-      <input type="number" id="W" min="30" step="0.1" placeholder="กว้าง (ซม.)" oninput="uDg();rHint();updLightH()">
-    </div>
-    <div class="fd"><label>สูงช่อง (ซม.)</label>
-      <input type="number" id="H" min="30" step="0.1" placeholder="สูง (ซม.)" oninput="uDg();rHint();updLightH()">
-    </div>
-    <div class="fd"><label>จำนวนชุด</label>
-      <input type="number" id="QT" min="1" placeholder="จำนวนชุด">
-    </div>
-  </div>
-  <!-- ช่องแสง: แสดงเมื่อเลือกบานสวิง+ช่องแสง -->
-  <div id="light-options" style="display:none">
-    <div class="g3" style="margin-top:8px">
-      <div class="fd"><label>ความสูงบานสวิง (ซม.)</label>
-        <input type="number" id="swDoorH" min="100" step="1" placeholder="ความสูงบานสวิง" oninput="updLightH()">
-      </div>
-      <div class="fd"><label>ความสูงช่องแสง (ซม.)</label>
-        <input type="number" id="swLightH" readonly style="background:#f5f5f5;color:#888;height:40px;width:100%;border-radius:7px;border:1.5px solid #ccc;padding:0 10px;font-size:14px">
-      </div>
-      <div class="fd" id="mid-type-fd" style="display:none"><label>เส้นกลางช่องแสง (บานคู่)</label>
-        <select id="swMidType">
-          <option value="groove">กล่องร่อง + ตบร่อง</option>
-          <option value="flat">กล่องเรียบ + ตบเรียบ</option>
-        </select>
-      </div>
-    </div>
-  </div>
+<div class="sl">ขนาดช่องและจำนวน</div>
+<div class="g3">
+<div class="fd"><label>กว้างช่อง (ซม.)</label>
+<input type="number" id="W" min="30" step="0.1" placeholder="กว้าง (ซม.)" oninput="uDg();rHint()">
+</div>
+<div class="fd"><label>สูงช่อง (ซม.)</label>
+<input type="number" id="H" min="30" step="0.1" placeholder="สูง (ซม.)" oninput="uDg();rHint()">
+</div>
+<div class="fd"><label>จำนวนชุด</label>
+<input type="number" id="QT" min="1" placeholder="จำนวนชุด">
+</div>
+</div>
 </div>
 <div class="card" id="thick-card">
-  <div class="sl">ความหนาเส้น</div>
-  <div class="tg2">
-    <div class="tc">
-      <div class="fl">กลุ่มเฟรม (บน / ล่าง / ข้าง)</div>
-      <select id="thF"></select>
-      <div class="info" id="infoF"></div>
-    </div>
-    <div class="tc">
-      <div class="fl">กลุ่มบาน (ขวาง / เสา)</div>
-      <select id="thS"></select>
-      <div class="info" id="infoS"></div>
-    </div>
-  </div>
+<div class="sl">ความหนาเส้น</div>
+<div class="tg2">
+<div class="tc">
+<div class="fl">กลุ่มเฟรม (บน / ล่าง / ข้าง)</div>
+<select id="thF"></select>
+<div class="info" id="infoF"></div>
 </div>
-
+<div class="tc">
+<div class="fl">กลุ่มบาน (ขวาง / เสา)</div>
+<select id="thS"></select>
+<div class="info" id="infoS"></div>
+</div>
+</div>
+</div>
 <!-- 6. ราคา -->
 <div class="card">
-  <div class="sl">ราคา</div>
-  <div class="g2">
-    <div class="fd"><label>ราคาอลูมิเนียม (บาท/กก.)</label><input type="number" id="AP" value="120" step="1"></div>
-    <div class="fd"><label>ราคากระจก (บาท/ตร.ฟุต)</label><input type="number" id="GP" value="23" step="1"></div>
-  </div>
+<div class="sl">ราคา</div>
+<div class="g2">
+<div class="fd"><label>ราคาอลูมิเนียม (บาท/กก.)</label><input type="number" id="AP" value="120" step="1"></div>
+<div class="fd"><label>ราคากระจก (บาท/ตร.ฟุต)</label><input type="number" id="GP" value="23" step="1"></div>
 </div>
-
+</div>
 <!-- 7. รายการที่เพิ่มแล้ว -->
 <div id="list-card" style="display:none">
-  <div class="card">
-    <div class="sl">รายการที่เพิ่มแล้ว</div>
-    <div class="item-list" id="item-list"></div>
-  </div>
+<div class="card">
+<div class="sl">รายการที่เพิ่มแล้ว</div>
+<div class="item-list" id="item-list"></div>
 </div>
-
+</div>
 <!-- 8. ปุ่มเพิ่ม -->
 <button class="btn-add" id="btn-add">+ เพิ่มรายการนี้</button>
 <!-- 9. ปุ่มคำนวณ -->
 <button class="bc" id="btnc" style="display:none">คำนวณทั้งหมด →</button>
 </div>
-
 <!-- หน้าผลลัพธ์ -->
 <div class="page" id="pg-out">
 <button class="bk" id="btnbk">← แก้ไขข้อมูล</button>
@@ -288,17 +339,16 @@ tr:last-child td{border-bottom:none}
 <div class="job-sub" id="out-sub"></div>
 <div class="ms" id="ms"></div>
 <div class="ts" id="ts">
-  <button class="ta on" data-t="pc">รายการตัด</button>
-  <button class="ta" data-t="pb">เส้นที่ซื้อ</button>
-  <button class="ta" data-t="pg">กระจก</button>
-  <button class="ta" data-t="pp">ราคารวม</button>
+<button class="ta on" data-t="pc">รายการตัด</button>
+<button class="ta" data-t="pb">เส้นที่ซื้อ</button>
+<button class="ta" data-t="pg">กระจก</button>
+<button class="ta" data-t="pp">ราคารวม</button>
 </div>
 <div class="card" id="pc"></div>
 <div class="card" id="pb" style="display:none"></div>
 <div class="card" id="pg" style="display:none"></div>
 <div class="card" id="pp" style="display:none"></div>
 </div>
-
 <script>
 var PD={
 "4001":{n:"เฟรมบน บานเลื่อน",v:[{t:"1.0 Lite",a:4.2,p:4.4},{t:"1.5 Lite",a:5.6,p:5.6}]},
@@ -339,8 +389,8 @@ var PD={
 "4011":{n:"เสากุญแจ",v:[{t:"1.0 Extra Lite",a:3.2,p:3.4},{t:"1.0 Lite",a:3.4,p:3.4},{t:"1.0",a:4.4,p:4.4},{t:"1.5",a:4.4,p:4.4},{t:"2.0",a:4.4,p:4.4}]},
 "4012":{n:"เสาเกี่ยว",v:[{t:"1.0 Extra Lite",a:3.2,p:3.4},{t:"1.0 Lite",a:3.4,p:3.4},{t:"1.0",a:4.4,p:4.4},{t:"1.5",a:4.4,p:4.4},{t:"2.0",a:4.4,p:4.4}]},
 "4013":{n:"เสาตาย",v:[{t:"1.0 Lite",a:3.2,p:3.4},{t:"1.0",a:4.4,p:4.4},{t:"1.5",a:4.4,p:4.5},{t:"2.0",a:4.5,p:4.5}]},
-"4014":{n:"ขวางบน",v:[{t:"1.0 Lite",a:2.4,p:2.6},{t:"1.0",a:2.6,p:2.6},{t:"1.5 Lite",a:3.3,p:3.3},{t:"1.5",a:3.6,p:3.65}]},
-"4015":{n:"ขวางล่าง",v:[{t:"1.0 Lite",a:3.2,p:3.4},{t:"1.0",a:4.4,p:4.4},{t:"1.5 Lite",a:3.4,p:3.4},{t:"1.5",a:4.4,p:4.4},{t:"2.0",a:4.4,p:4.4}]},
+"4014":{n:"ขวางบน",v:[{t:"1.0 Lite",a:2.4,p:2.6},{t:"1.0",a:2.6,p:2.6},{t:"1.2",a:3.0,p:3.05},{t:"1.5 Lite",a:3.3,p:3.3},{t:"1.5",a:3.6,p:3.65}]},
+"4015":{n:"ขวางล่าง",v:[{t:"1.0 Lite",a:3.2,p:3.4},{t:"1.0",a:4.4,p:4.4},{t:"1.2",a:4.4,p:4.4},{t:"1.5 Lite",a:3.4,p:3.4},{t:"1.5",a:4.4,p:4.4},{t:"2.0",a:4.4,p:4.4}]},
 "4016":{n:"ชนกลาง",v:[{t:"1.0",a:1.58,p:1.63}]}
 };
 var FT_L=["4001","4870","4004","14010","020070"];
@@ -353,480 +403,335 @@ var FB_RK={"4002":"std","4871":"box4bot","4394":"tall_no","4800":"tall_yes","400
 var HR={"std_std":2.0,"box4_box4bot":9.1,"box4_std":5.2,"box4_tall_no":5.8,"box4_tall_yes":6.1};
 var GS=[[36,24],[36,36],[36,42],[36,48],[36,60],[36,72],[36,84],[36,96],[42,24],[42,42],[42,48],[42,60],[42,84],[42,96],[42,120],[48,24],[48,48],[48,60],[48,72],[48,84],[48,96],[48,120],[60,60],[60,72],[60,96],[60,120],[72,72],[72,84],[72,96],[72,120],[84,42],[84,84],[84,96],[84,120],[96,96],[96,120]];
 var TY=[
-  {id:"s2",  lb:"บานเลื่อนสลับ",  pn:2,sl:2,rw:14.5,dv:2,sc:{k:2,h:2,d:0}},
-  {id:"f1s1",lb:"1 fix+1 เลื่อน",pn:2,sl:1,rw:12.5,dv:2,sc:{k:1,h:2,d:1}},
-  {id:"s3",  lb:"บานเลื่อน 3",    pn:3,sl:3,rw:18.0,dv:3,sc:{k:2,h:4,d:0}},
-  {id:"f1s2",lb:"1 fix+2 เลื่อน",pn:3,sl:2,rw:15.5,dv:3,sc:{k:1,h:4,d:1}},
-  {id:"f2s2",lb:"2 fix+2 เลื่อน",pn:4,sl:2,rw:23.5,dv:4,sc:{k:2,h:4,d:2,m:1}}
+{id:"s2",  lb:"บานเลื่อนสลับ",  pn:2,sl:2,rw:14.5,dv:2,sc:{k:2,h:2,d:0}},
+{id:"f1s1",lb:"1 fix+1 เลื่อน",pn:2,sl:1,rw:12.5,dv:2,sc:{k:1,h:2,d:1}},
+{id:"s3",  lb:"บานเลื่อน 3",    pn:3,sl:3,rw:18.0,dv:3,sc:{k:2,h:4,d:0}},
+{id:"f1s2",lb:"1 fix+2 เลื่อน",pn:3,sl:2,rw:15.5,dv:3,sc:{k:1,h:4,d:1}},
+{id:"f2s2",lb:"2 fix+2 เลื่อน",pn:4,sl:2,rw:23.5,dv:4,sc:{k:2,h:4,d:2,m:1}}
 ];
-var TY_SWING=[{id:"sw1",lb:"บานสวิงเดี่ยว"},{id:"sw2",lb:"บานสวิงคู่"},{id:"sw1l",lb:"สวิงเดี่ยว+ช่องแสง"},{id:"sw2l",lb:"สวิงคู่+ช่องแสง"}];
-var T_LABELS={s2:"บานเลื่อนสลับ",f1s1:"1fix+1เลื่อน",s3:"บานเลื่อน 3",f1s2:"1fix+2เลื่อน",f2s2:"2fix+2เลื่อน",s2l:"สลับ+ช่องแสง",f1s1l:"1fix+1เลื่อน+ช่องแสง",s3l:"บาน3+ช่องแสง",f1s2l:"1fix+2เลื่อน+ช่องแสง",f2s2l:"2fix+2เลื่อน+ช่องแสง",sw1:"บานสวิงเดี่ยว",sw2:"บานสวิงคู่",sw1l:"สวิงเดี่ยว+ช่องแสง",sw2l:"สวิงคู่+ช่องแสง"};
-var BAR=635,CT="s2",CT_CAT="slide",CT_SWING="sw1",CT_SL="s2l",ITEMS=[];
-
+var TY_SWING=[{id:"sw1",lb:"บานสวิงเดี่ยว"},{id:"sw2",lb:"บานสวิงคู่"}];
+var T_LABELS={s2:"บานเลื่อนสลับ",f1s1:"1fix+1เลื่อน",s3:"บานเลื่อน 3",f1s2:"1fix+2เลื่อน",f2s2:"2fix+2เลื่อน",sw1:"บานสวิงเดี่ยว",sw2:"บานสวิงคู่"};
+var BAR=635,CT="s2",CT_CAT="slide",CT_SWING="sw1",ITEMS=[];
 function g(id){return document.getElementById(id);}
 function rn(n,d){return parseFloat(n.toFixed(d===undefined?2:d));}
 function fm(n,d){return parseFloat(n.toFixed(d===undefined?0:d)).toLocaleString();}
 function gT(){return TY.find(function(t){return t.id===CT;});}
 function isAno(){return g("COL").value==="a";}
 function rc(c){return(c==="3013m"||c==="3013f"||c==="3013s")?"3013":c;}
-function getWtByLabel(code,thk){var pd=PD[code]||PD[rc(code)];if(!pd)return 0;var v=pd.v.find(function(x){return x.t===thk;})||pd.v[0];return isAno()?v.a:v.p;}
-function getWtA(code,thk){var pd=PD[code]||PD[rc(code)];if(!pd)return 0;var v=pd.v.find(function(x){return x.t===thk;})||pd.v[0];return v?v.a:0;}
-function getWtP(code,thk){var pd=PD[code]||PD[rc(code)];if(!pd)return 0;var v=pd.v.find(function(x){return x.t===thk;})||pd.v[0];return v?v.p:0;}
-
-function calcBars(pieces){
-  var all=[];
-  pieces.forEach(function(p){for(var i=0;i<p.qty;i++)all.push(p.dim);});
-  all.sort(function(a,b){return b-a;});
-  var bars=[];
-  all.forEach(function(d){
-    var placed=false;
-    for(var i=0;i<bars.length;i++){if(bars[i]>=d){bars[i]-=d;placed=true;break;}}
-    if(!placed){bars.push(BAR-d);}
-  });
-  return bars.length;
+function pickV(pd,thk){
+if(!pd||!pd.v||!pd.v.length)return null;
+var ex=pd.v.find(function(x){return x.t===thk;});
+if(ex)return ex;
+var tn=parseFloat(thk);
+if(isNaN(tn))return pd.v[0];
+var best=pd.v[0],bd=Infinity;
+pd.v.forEach(function(x){var d=Math.abs(parseFloat(x.t)-tn);if(d<bd){bd=d;best=x;}});
+return best;
 }
-
+function getWtByLabel(code,thk){var v=pickV(PD[code]||PD[rc(code)],thk);return v?(isAno()?v.a:v.p):0;}
+function getWtA(code,thk){var v=pickV(PD[code]||PD[rc(code)],thk);return v?v.a:0;}
+function getWtP(code,thk){var v=pickV(PD[code]||PD[rc(code)],thk);return v?v.p:0;}
+function calcBars(pieces){
+var all=[];
+pieces.forEach(function(p){for(var i=0;i<p.qty;i++)all.push(p.dim);});
+all.sort(function(a,b){return b-a;});
+var bars=[];
+all.forEach(function(d){
+var placed=false;
+for(var i=0;i<bars.length;i++){if(bars[i]>=d){bars[i]-=d;placed=true;break;}}
+if(!placed){bars.push(BAR-d);}
+});
+return bars.length;
+}
 function fillFrameSels(){
-  g("sft").innerHTML=FT_L.map(function(c){return'<option value="'+c+'">'+PD[c].n+'</option>';}).join("");
-  g("sfb").innerHTML=FB_L.map(function(c){return'<option value="'+c+'">'+PD[c].n+'</option>';}).join("");
-  g("sfs").innerHTML=FS_L.map(function(c){return'<option value="'+c+'">'+(PD[c]?PD[c].n:PD[rc(c)].n)+'</option>';}).join("");
+g("sft").innerHTML=FT_L.map(function(c){return'<option value="'+c+'">'+PD[c].n+'</option>';}).join("");
+g("sfb").innerHTML=FB_L.map(function(c){return'<option value="'+c+'">'+PD[c].n+'</option>';}).join("");
+g("sfs").innerHTML=FS_L.map(function(c){return'<option value="'+c+'">'+(PD[c]?PD[c].n:PD[rc(c)].n)+'</option>';}).join("");
 }
 function updFrameThick(){
-  var fsC=g("sfs").value;var pd=PD[rc(fsC)];
-  var sel=g("thF");var cur=sel.value;
-  sel.innerHTML=pd.v.map(function(v){return'<option value="'+v.t+'">'+v.t+' mm.</option>';}).join("");
-  if(cur)sel.value=cur;
-  updFrameInfo();
+var fsC=g("sfs").value;var pd=PD[rc(fsC)];
+var sel=g("thF");var cur=sel.value;
+sel.innerHTML=pd.v.map(function(v){return'<option value="'+v.t+'">'+v.t+' mm.</option>';}).join("");
+if(cur)sel.value=cur;
+updFrameInfo();
 }
 function updFrameInfo(){
-  var thk=g("thF").value;
-  var ftC=g("sft").value,fbC=g("sfb").value,fsC=g("sfs").value;
-  function row(code,nm){var a=getWtA(code,thk),p=getWtP(code,thk);return nm+": <b style=\"color:#1860a8\">"+a+"</b> / <b style=\"color:#e07000\">"+p+"</b> kg/bar";}
-  g("infoF").innerHTML=row(ftC,PD[ftC].n)+"<br>"+row(fbC,PD[rc(fbC)].n)+"<br>"+row(fsC,(PD[fsC]||PD[rc(fsC)]).n);
-  g("wft").textContent=(isAno()?getWtA(ftC,thk):getWtP(ftC,thk))+" kg/bar";
-  g("wfb").textContent=(isAno()?getWtA(fbC,thk):getWtP(fbC,thk))+" kg/bar";
-  g("wfs").textContent=(isAno()?getWtA(fsC,thk):getWtP(fsC,thk))+" kg/bar";
+var thk=g("thF").value;
+var ftC=g("sft").value,fbC=g("sfb").value,fsC=g("sfs").value;
+function row(code,nm){var a=getWtA(code,thk),p=getWtP(code,thk);return nm+": <b style=\"color:#1860a8\">"+a+"</b> / <b style=\"color:#e07000\">"+p+"</b> kg/bar";}
+g("infoF").innerHTML=row(ftC,PD[ftC].n)+"<br>"+row(fbC,PD[rc(fbC)].n)+"<br>"+row(fsC,(PD[fsC]||PD[rc(fsC)]).n);
+g("wft").textContent=(isAno()?getWtA(ftC,thk):getWtP(ftC,thk))+" kg/bar";
+g("wfb").textContent=(isAno()?getWtA(fbC,thk):getWtP(fbC,thk))+" kg/bar";
+g("wfs").textContent=(isAno()?getWtA(fsC,thk):getWtP(fsC,thk))+" kg/bar";
 }
 function updSashThick(){
-  var pd=PD["4014"];var sel=g("thS");var cur=sel.value;
-  sel.innerHTML=pd.v.map(function(v){return'<option value="'+v.t+'">'+v.t+' mm.</option>';}).join("");
-  if(cur)sel.value=cur;
-  updSashInfo();
+var pd=PD["4014"];var sel=g("thS");var cur=sel.value;
+sel.innerHTML=pd.v.map(function(v){return'<option value="'+v.t+'">'+v.t+' mm.</option>';}).join("");
+if(cur)sel.value=cur;
+updSashInfo();
 }
 function updSashInfo(){
-  var thk=g("thS").value;
-  var codes=["4014","4015","4011","4012","4013","4016"];
-  var names=["ขวางบน","ขวางล่าง","เสากุญแจ","เสาเกี่ยว","เสาตาย","ชนกลาง"];
-  g("infoS").innerHTML=codes.map(function(c,i){var a=getWtA(c,thk),p=getWtP(c,thk);return names[i]+": <b style=\"color:#1860a8\">"+a+"</b> / <b style=\"color:#e07000\">"+p+"</b> kg/bar";}).join("<br>");
+var thk=g("thS").value;
+var codes=["4014","4015","4011","4012","4013","4016"];
+var names=["ขวางบน","ขวางล่าง","เสากุญแจ","เสาเกี่ยว","เสาตาย","ชนกลาง"];
+g("infoS").innerHTML=codes.map(function(c,i){
+var v=pickV(PD[c],thk);if(!v)return names[i]+": -";
+var tag=(v.t===thk)?"":' <span style="color:#c0392b">(ใช้ '+v.t+')</span>';
+return names[i]+": <b style=\"color:#1860a8\">"+v.a+"</b> / <b style=\"color:#e07000\">"+v.p+"</b> kg/bar"+tag;
+}).join("<br>");
 }
 function updSwingThick(){
-  g("thSW1").innerHTML=PD["3030"].v.map(function(v){return'<option value="'+v.t+'">'+v.t+' mm.</option>';}).join("");
-  g("thSW2").innerHTML=PD["3020"].v.map(function(v){return'<option value="'+v.t+'">'+v.t+' mm.</option>';}).join("");
-  updSwingInfo();
+g("thSW1").innerHTML=PD["3030"].v.map(function(v){return'<option value="'+v.t+'">'+v.t+' mm.</option>';}).join("");
+g("thSW2").innerHTML=PD["3020"].v.map(function(v){return'<option value="'+v.t+'">'+v.t+' mm.</option>';}).join("");
+updSwingInfo();
 }
 function updSwingInfo(){
-  var thk1=g("thSW1").value,thk2=g("thSW2").value;
-  var codes1=["3013s","3026","3027","3067","3030","3031","3032"];
-  var names1=["กล่องเรียบ","กล่องแจ็คสัน","ฝาแจ็คสัน","ธรณี","เสาประตู","เสาประตูบน","เสาประตูล่าง"];
-  g("infoSW1").innerHTML=codes1.map(function(c,i){var a=getWtA(c,thk1),p=getWtP(c,thk1);return names1[i]+": <b style=\"color:#1860a8\">"+a+"</b> / <b style=\"color:#e07000\">"+p+"</b> kg/bar";}).join("<br>");
-  g("infoSW2").innerHTML="คิ้วประตู: <b style=\"color:#1860a8\">"+getWtA("3020",thk2)+"</b> / <b style=\"color:#e07000\">"+getWtP("3020",thk2)+"</b> kg/bar";
+var thk1=g("thSW1").value,thk2=g("thSW2").value;
+var codes1=["3013s","3026","3027","3067","3030","3031","3032"];
+var names1=["กล่องเรียบ","กล่องแจ็คสัน","ฝาแจ็คสัน","ธรณี","เสาประตู","เสาประตูบน","เสาประตูล่าง"];
+g("infoSW1").innerHTML=codes1.map(function(c,i){var a=getWtA(c,thk1),p=getWtP(c,thk1);return names1[i]+": <b style=\"color:#1860a8\">"+a+"</b> / <b style=\"color:#e07000\">"+p+"</b> kg/bar";}).join("<br>");
+g("infoSW2").innerHTML="คิ้วประตู: <b style=\"color:#1860a8\">"+getWtA("3020",thk2)+"</b> / <b style=\"color:#e07000\">"+getWtP("3020",thk2)+"</b> kg/bar";
 }
 function bTG(){
-  g("tg").innerHTML=TY.map(function(t){return'<button class="tb'+(t.id===CT?" on":"")+'" data-ty="'+t.id+'">'+t.lb+'</button>';}).join("");
+g("tg").innerHTML=TY.map(function(t){return'<button class="tb'+(t.id===CT?" on":"")+'" data-ty="'+t.id+'">'+t.lb+'</button>';}).join("");
 }
-
 function bTGSwing(){
-  g("tg-swing").innerHTML=TY_SWING.map(function(t){return'<button class="tb'+(t.id===CT_SWING?" on":"")+'" data-sw="'+t.id+'">'+t.lb+'</button>';}).join("");
-  var hasLight=CT_SWING==="sw1l"||CT_SWING==="sw2l";
-  var lo=g("light-options");if(lo)lo.style.display=hasLight?"block":"none";
-  var midFd=g("mid-type-fd");if(midFd)midFd.style.display=(CT_SWING==="sw2l")?"block":"none";
-  if(hasLight)updLightH();
+g("tg-swing").innerHTML=TY_SWING.map(function(t){return'<button class="tb'+(t.id===CT_SWING?" on":"")+'" data-sw="'+t.id+'">'+t.lb+'</button>';}).join("");
 }
-function gR(){function gn(id){var e=g(id);return e?parseFloat(e.value)||0:0;}if(CT==="f1s1")return[gn("r0"),gn("r1")];if(CT==="f1s2")return[gn("r0"),gn("r1"),gn("r2")];if(CT==="f2s2")return[gn("r0"),gn("r1"),gn("r2"),gn("r3")];return[];}
 function gPT(){switch(CT){case"s2":return["s","s"];case"f1s1":return["f","s"];case"s3":return["s","s","s"];case"f1s2":return["f","s","s"];case"f2s2":return["f","s","s","f"];}return["s","s"];}
 function gPW(){var W=parseFloat(g("W").value)||100;var T=gT();return gPT().map(function(){return rn(W/T.pn,2);});}
 function uDg(){
-  if(CT_CAT==="swing"){g("dg").innerHTML="";return;}
-  var pt=gPT();var ws=gPW();
-  var h='<div class="dg"><div class="dr">เฟรม</div>';
-  pt.forEach(function(p,i){h+='<div class="dp '+(p==="s"?"ds":"df")+'"><span class="dw">'+ws[i]+' ซม.</span><span class="dt">'+(p==="f"?"fix":"เลื่อน")+'</span></div>';});
-  h+='<div class="dr">เฟรม</div></div>';
-  g("dg").innerHTML=h;
+if(CT_CAT==="swing"){g("dg").innerHTML="";return;}
+var pt=gPT();var ws=gPW();
+var h='<div class="dg"><div class="dr">เฟรม</div>';
+pt.forEach(function(p,i){h+='<div class="dp '+(p==="s"?"ds":"df")+'"><span class="dw">'+ws[i]+' ซม.</span><span class="dt">'+(p==="f"?"fix":"เลื่อน")+'</span></div>';});
+h+='<div class="dr">เฟรม</div></div>';
+g("dg").innerHTML=h;
 }
 function rHint(){
-  if(CT_CAT==="swing"){g("hi").innerHTML="";return;}
-  var T=gT();var fsC=g("sfs").value;var fsRW=FS_RW[fsC]||1.2;var hasMid=FS_MID[fsC]||false;var rw=T.rw+(hasMid?0.3:0);
-  g("hi").innerHTML='<div class="ht">เฟรมบน-ล่าง = กว้าง - '+fsRW+' | ขวาง = (กว้าง - '+fsRW+' - '+rw+') / '+T.dv+(hasMid?" (มีชนกลาง)":"")+'<br>เสา = สูง - ค่าลดตามเฟรมบน+ล่าง</div>';
+if(CT_CAT==="swing"){g("hi").innerHTML="";return;}
+var T=gT();var fsC=g("sfs").value;var fsRW=FS_RW[fsC]||1.2;var hasMid=FS_MID[fsC]||false;var rw=T.rw+(hasMid?0.3:0);
+g("hi").innerHTML='<div class="ht">เฟรมบน-ล่าง = กว้าง - '+fsRW+' | ขวาง = (กว้าง - '+fsRW+' - '+rw+') / '+T.dv+(hasMid?" (มีชนกลาง)":"")+'<br>เสา = สูง - ค่าลดตามเฟรมบน+ล่าง</div>';
 }
 function gHR(ftC,fbC){var k=(FT_RK[ftC]||"std")+"_"+(FB_RK[fbC]||"std");return{v:HR[k]||2.0,k:ftC+" + "+fbC};}
 function fBest(wc,hc,ns,gp){var wi=wc/2.54,hi=hc/2.54;var best=null;GS.forEach(function(sz){[[sz[0],sz[1]],[sz[1],sz[0]]].forEach(function(o){if(o[0]>=wi&&o[1]>=hi){var c=rn((o[0]*o[1]/144)*gp*ns,0);if(!best||c<best.c)best={w:o[0],h:o[1],m:"แยก "+ns+" แผ่น",c:c};}if(ns>=2){if(o[0]>=wi*ns&&o[1]>=hi){var c=rn((o[0]*o[1]/144)*gp,0);if(!best||c<best.c)best={w:o[0],h:o[1],m:"แผ่นเดียวแนวนอน",c:c};}if(o[0]>=wi&&o[1]>=hi*ns){var c=rn((o[0]*o[1]/144)*gp,0);if(!best||c<best.c)best={w:o[0],h:o[1],m:"แผ่นเดียวแนวตั้ง",c:c};}}});});return best;}
-
 function switchCat(cat){
-  CT_CAT=cat;
-  document.querySelectorAll(".cat-tab").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-cat")===cat);});
-  g("type-area").style.display=cat==="slide"?"block":"none";
-  g("swing-area").style.display=cat==="swing"?"block":"none";
-  g("frame-card").style.display=cat==="slide"?"block":"none";
-  g("thick-card").style.display=cat==="slide"?"block":"none";
-  g("dg").innerHTML="";
-  g("hi").innerHTML="";
-  if(cat==="slide"){CT="s2";bTG();uDg();rHint();}
-  else{CT_SWING="sw1";bTGSwing();}
-}
-
-function calcSwingLightItem(item){
-  var ano=item.col==="a";
-  function getW(code,thk){var pd=PD[code]||PD[rc(code)];if(!pd)return 0;var v=pd.v.find(function(x){return x.t===thk;})||pd.v[0];return ano?v.a:v.p;}
-  var W=item.W,H=item.H,qty=item.qty;
-  var isDouble=item.ct==="sw2l";
-  var thk1=item.swThk1,thk2=item.swThk2,thk3=item.swThk3||"1.0 Lite";
-  var doorH=item.swDoorH||rn(H*0.7,1); // ความสูงประตู
-  var lightH=item.swLightH>0?rn(item.swLightH,2):rn(H-doorH,2);
-  var midType=item.swMidType||"groove"; // groove=กล่องร่อง, flat=กล่องเรียบ
-
-  // สูตรเหมือนบานสวิงปกติแต่กล่องเรียบยาวทั้งช่อง
-  var boxW=rn(W-9.0,2);
-  var poleH=rn(doorH-6.5,2);
-  var poleTopW=isDouble?rn((W-31.5)/2,2):rn(W-20.4,2);
-  var trimH=rn(doorH-19.6,2);
-  var trimW=isDouble?rn((W-31.5)/2,2):rn(W-20.4,2);
-  var nPole=isDouble?4:2,nPoleTop=isDouble?2:1,nTrim=isDouble?8:4;
-
-  // คิ้วลอยเทช่องแสง
-  var lTrimV=rn(lightH-4.5,2); // ตั้ง
-  var lTrimH_s=rn(W-9.3,2); // นอน บานเดี่ยว
-  var lTrimH_d=isDouble?(midType==="groove"?rn((W-13.5)/2-0.3,2):rn((W-13.5)/2-0.6,2)):lTrimH_s;
-  var nLTrimV=isDouble?2:2;
-  var nLTrimH=isDouble?2:1;
-  var nLTrimVmid=isDouble?(midType==="groove"?0:2):0;
-
-  var rows=[
-    {n:"กล่องเรียบ (ข้าง)",c:"3013s",dim:H,pcs:2*qty,w:getW("3013s",thk1)},
-    {n:"กล่องร่อง (บนสุด)",c:"3012",dim:boxW,pcs:qty,w:getW("3012",thk1)},
-    {n:"กล่องแจ็คสัน",c:"3026",dim:boxW,pcs:qty,w:getW("3026",thk1)},
-    {n:"ฝาแจ็คสัน",c:"3027",dim:boxW,pcs:qty,w:getW("3027",thk1)},
-    {n:"ธรณีบานสวิง",c:"3067",dim:boxW,pcs:qty,w:getW("3067",thk1)},
-    {n:"เสาประตู",c:"3030",dim:poleH,pcs:nPole*qty,w:getW("3030",thk1)},
-    {n:"เสาประตูบน",c:"3031",dim:poleTopW,pcs:nPoleTop*qty,w:getW("3031",thk1)},
-    {n:"เสาประตูล่าง",c:"3032",dim:poleTopW,pcs:nPoleTop*qty,w:getW("3032",thk1)},
-    {n:"คิ้วประตู (สูง)",c:"3020",dim:trimH,pcs:nTrim*qty,w:getW("3020",thk2)},
-    {n:"คิ้วประตู (กว้าง)",c:"3020",dim:trimW,pcs:nTrim*qty,w:getW("3020",thk2)},
-    {n:"คิ้วลอยตั้ง 3018 (ช่องแสง)",c:"3018",dim:lTrimV,pcs:nLTrimV*qty,w:getW("3018",thk3)},
-    {n:"คิ้วลอยตั้ง 3019 (ช่องแสง)",c:"3019",dim:lTrimV,pcs:nLTrimV*qty,w:getW("3019",thk3)},
-    {n:"คิ้วลอยนอน 3018 (ช่องแสง)",c:"3018",dim:isDouble?lTrimH_d:lTrimH_s,pcs:nLTrimH*qty,w:getW("3018",thk3)},
-    {n:"คิ้วลอยนอน 3019 (ช่องแสง)",c:"3019",dim:isDouble?lTrimH_d:lTrimH_s,pcs:nLTrimH*qty,w:getW("3019",thk3)},
-  ];
-
-  if(isDouble){
-    // เส้นกลางช่องแสง
-    var midDim=rn(lightH-4.5,2);
-    if(midType==="groove"){
-      rows.push({n:"กล่องร่อง (กลางช่องแสง)",c:"3012",dim:midDim,pcs:qty,w:getW("3012",thk1)});
-      rows.push({n:"ตบร่อง (กลางช่องแสง)",c:"3014",dim:midDim,pcs:qty,w:getW("3014",thk1)});
-    } else {
-      rows.push({n:"กล่องเรียบ (กลางช่องแสง)",c:"3013s",dim:midDim,pcs:qty,w:getW("3013s",thk1)});
-      rows.push({n:"ตบเรียบ (กลางช่องแสง)",c:"3015",dim:midDim,pcs:qty,w:getW("3015",thk1)});
-      rows.push({n:"คิ้วลอยตั้ง 3018 (กลาง)",c:"3018",dim:lTrimV,pcs:2*qty,w:getW("3018",thk3)});
-      rows.push({n:"คิ้วลอยตั้ง 3019 (กลาง)",c:"3019",dim:lTrimV,pcs:2*qty,w:getW("3019",thk3)});
-    }
-  }
-
-  var gWc=isDouble?rn(poleTopW-2.0,2):rn(poleTopW-1.0,2);
-  var gHc_door=rn(poleH-14.0,2);
-  var gHc_light=rn(lTrimV,2);
-  return{cat:"swing",rows:rows,W:W,H:H,doorH:doorH,lightH:lightH,boxW:boxW,poleH:poleH,poleTopW:poleTopW,trimH:trimH,trimW:trimW,isDouble:isDouble,qty:qty,gWc:gWc,gHc:gHc_door,gHc_light:gHc_light,hasLight:true};
-}
-function calcSlideLightItem(item){
-  var T=TY.find(function(t){return t.id===item.ct;});
-  var ano=item.col==="a";
-  function getW(code,thk){var pd=PD[code]||PD[rc(code)];if(!pd)return 0;var v=pd.v.find(function(x){return x.t===thk;})||pd.v[0];return ano?v.a:v.p;}
-  var hasMid=FS_MID[item.fsC]||false;
-  var hr=gHR(item.ftC,item.fbC);
-  var fsRW=9.0; // กล่องเรียบเสมอ
-  var rw=T.rw+(hasMid?0.3:0);
-  var slideH=item.swDoorH||rn(item.H*0.7,1);
-  var lightH=rn(item.H-slideH,2);
-  var fW=rn(item.W-fsRW,2);
-  var sW=rn((item.W-fsRW-rw)/T.dv,2);
-  var sH=rn(slideH-hr.v,2);
-  var sc=T.sc;var qty=item.qty;
-  var midType=item.swMidType||"groove";
-  var nMid=T.pn-1; // จำนวนกล่องกลาง = บาน-1
-  var midH=rn(lightH-4.5,2);
-  // สูตรคิ้วลอยเทแนวนอน
-  var trimHW=rn((item.W-9.0-(4.5*nMid))/T.pn-(midType==="groove"?0.15:0.3),2);
-  // คิ้วลอยเทแนวตั้ง
-  var nTrimV=midType==="groove"?2:2+2*nMid;
-
-  var wFT=getW(item.ftC,item.fThk),wFB=getW(item.fbC,item.fThk);
-  var wFS=getW("3013",item.fThk); // กล่องเรียบเสมอ
-  var wTop=getW("4014",item.sThk),wBot=getW("4015",item.sThk);
-  var wKey=getW("4011",item.sThk),wHook=getW("4012",item.sThk),wDead=getW("4013",item.sThk);
-  var wMid16=getW("4016",item.sThk);
-  var wBox12=getW("3012",item.fThk);
-  var wMidC=midType==="groove"?getW("3012",item.fThk):getW("3013",item.fThk);
-  var wMidT=midType==="groove"?getW("3014",item.fThk):getW("3015",item.fThk);
-  var wTb15=getW("3015",item.fThk);
-  var wTrim=getW("3018",item.fThk);
-  var wTrim2=getW("3019",item.fThk);
-
-  var rows=[
-    {n:"เฟรมบน",c:item.ftC,dim:fW,pcs:qty,w:wFT,cat:"f"},
-    {n:"เฟรมล่าง",c:item.fbC,dim:fW,pcs:qty,w:wFB,cat:"f"},
-    {n:"กล่องเรียบ (ข้าง)",c:"3013s",dim:item.H,pcs:2*qty,w:wFS,cat:"f"},
-    {n:"กล่องร่อง (บนสุด)",c:"3012",dim:rn(item.W-9.0,2),pcs:qty,w:wBox12,cat:"f"},
-    {n:"ตบเรียบ (ประกบเฟรมบน)",c:"3015",dim:fW,pcs:qty,w:wTb15,cat:"f"},
-    {n:"ขวางบน",c:"4014",dim:sW,pcs:T.pn*qty,w:wTop,cat:"s"},
-    {n:"ขวางล่าง",c:"4015",dim:sW,pcs:T.pn*qty,w:wBot,cat:"s"},
-  ];
-  if(sc.k>0)rows.push({n:"เสากุญแจ",c:"4011",dim:sH,pcs:sc.k*qty,w:wKey,cat:"s"});
-  if(sc.h>0)rows.push({n:"เสาเกี่ยว",c:"4012",dim:sH,pcs:sc.h*qty,w:wHook,cat:"s"});
-  if(sc.d>0)rows.push({n:"เสาตาย",c:"4013",dim:sH,pcs:sc.d*qty,w:wDead,cat:"s"});
-  if(hasMid)rows.push({n:"ชนกลาง",c:"4016",dim:sH,pcs:qty,w:wMid16,cat:"s"});
-  if(sc.m&&sc.m>0&&!hasMid)rows.push({n:"ชนกลาง (เสากุญแจ)",c:"4016",dim:sH,pcs:sc.m*qty,w:wMid16,cat:"s"});
-  // กล่องกลางช่องแสง (แนวตั้ง)
-  if(nMid>0){
-    rows.push({n:"กล่องกลาง ("+(midType==="groove"?"กล่องร่อง":"กล่องเรียบ")+")",c:midType==="groove"?"3012":"3013s",dim:midH,pcs:nMid*qty,w:wMidC,cat:"f"});
-    rows.push({n:"กล่องกลาง ("+(midType==="groove"?"ตบร่อง":"ตบเรียบ")+")",c:midType==="groove"?"3014":"3015",dim:midH,pcs:nMid*qty,w:wMidT,cat:"f"});
-  }
-  // คิ้วลอยเทแนวตั้ง
-  rows.push({n:"คิ้วลอยเล็ก 3018 (แนวตั้ง)",c:"3018",dim:midH,pcs:nTrimV*qty,w:wTrim,cat:"f"});
-  rows.push({n:"คิ้วลอยใหญ่ 3019 (แนวตั้ง)",c:"3019",dim:midH,pcs:nTrimV*qty,w:wTrim2,cat:"f"});
-  // คิ้วลอยเทแนวนอน
-  rows.push({n:"คิ้วลอยเล็ก 3018 (แนวนอน)",c:"3018",dim:trimHW,pcs:T.pn*qty,w:wTrim,cat:"f"});
-  rows.push({n:"คิ้วลอยใหญ่ 3019 (แนวนอน)",c:"3019",dim:trimHW,pcs:T.pn*qty,w:wTrim2,cat:"f"});
-
-  var gWc=rn(sW+1.3,2),gHc=rn(sH-8.0,2);
-  var gWcL=rn(trimHW,2),gHcL=rn(midH,2);
-  return{cat:"slide",hasLight:true,T:T,fW:fW,sW:sW,sH:sH,hr:hr,hasMid:hasMid,rw:rw,fsRW:fsRW,rows:rows,gWc:gWc,gHc:gHc,gWcL:gWcL,gHcL:gHcL,lightH:lightH,slideH:slideH,nMid:nMid,trimHW:trimHW,midH:midH,qty:qty};
+CT_CAT=cat;
+document.querySelectorAll(".cat-tab").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-cat")===cat);});
+g("type-area").style.display=cat==="slide"?"block":"none";
+g("swing-area").style.display=cat==="swing"?"block":"none";
+g("frame-card").style.display=cat==="slide"?"block":"none";
+g("thick-card").style.display=cat==="slide"?"block":"none";
+g("dg").innerHTML="";
+g("hi").innerHTML="";
+if(cat==="slide"){CT="s2";bTG();uDg();rHint();}
+else{CT_SWING="sw1";bTGSwing();}
 }
 function calcSlideItem(item){
-  var T=TY.find(function(t){return t.id===item.ct;});
-  var ano=item.col==="a";
-  function getW(code,thk){var pd=PD[code]||PD[rc(code)];if(!pd)return 0;var v=pd.v.find(function(x){return x.t===thk;})||pd.v[0];return ano?v.a:v.p;}
-  var hasMid=FS_MID[item.fsC]||false;
-  var hr=gHR(item.ftC,item.fbC);
-  var fsRW=FS_RW[item.fsC]||1.2;
-  var rw=T.rw+(hasMid?0.3:0);
-  var fW=rn(item.W-fsRW,2);
-  var sW=rn((item.W-fsRW-rw)/T.dv,2);
-  var sH=rn(item.H-hr.v,2);
-  var sc=T.sc;var qty=item.qty;
-  var wFT=getW(item.ftC,item.fThk),wFB=getW(item.fbC,item.fThk),wFS=getW(item.fsC,item.fThk);
-  var wTop=getW("4014",item.sThk),wBot=getW("4015",item.sThk);
-  var wKey=getW("4011",item.sThk),wHook=getW("4012",item.sThk),wDead=getW("4013",item.sThk);
-  var wMid=getW("4016",item.sThk);
-  var rows=[
-    {n:"เฟรมบน",c:item.ftC,dim:fW,pcs:qty,w:wFT,cat:"f"},
-    {n:"เฟรมล่าง",c:item.fbC,dim:fW,pcs:qty,w:wFB,cat:"f"},
-    {n:"เฟรมข้าง",c:item.fsC,dim:item.H,pcs:2*qty,w:wFS,cat:"f"},
-    {n:"ขวางบน",c:"4014",dim:sW,pcs:T.pn*qty,w:wTop,cat:"s"},
-    {n:"ขวางล่าง",c:"4015",dim:sW,pcs:T.pn*qty,w:wBot,cat:"s"},
-  ];
-  if(sc.k>0)rows.push({n:"เสากุญแจ",c:"4011",dim:sH,pcs:sc.k*qty,w:wKey,cat:"s"});
-  if(sc.h>0)rows.push({n:"เสาเกี่ยว",c:"4012",dim:sH,pcs:sc.h*qty,w:wHook,cat:"s"});
-  if(sc.d>0)rows.push({n:"เสาตาย",c:"4013",dim:sH,pcs:sc.d*qty,w:wDead,cat:"s"});
-  if(item.fsC==="3013f")rows.push({n:"เฟรมข้าง (4003)",c:"4003",dim:item.H,pcs:2*qty,w:getW("4003",item.fThk),cat:"f"});
-  if(hasMid)rows.push({n:"ชนกลาง (เฟรมข้าง)",c:"4016",dim:sH,pcs:qty,w:wMid,cat:"s"});
-  if(sc.m&&sc.m>0){
-    if(!hasMid)rows.push({n:"ชนกลาง (เสากุญแจ)",c:"4016",dim:sH,pcs:sc.m*qty,w:wMid,cat:"s"});
-    else rows.push({n:"ชนกลาง (เสากุญแจ) ใช้เศษ",c:"4016",dim:sH,pcs:sc.m*qty,w:wMid,cat:"s",note:"ใช้เศษ"});
-  }
-  var gWc=rn(sW+1.3,2),gHc=rn(sH-8.0,2);
-  return{cat:"slide",T:T,fW:fW,sW:sW,sH:sH,hr:hr,hasMid:hasMid,rw:rw,fsRW:fsRW,rows:rows,gWc:gWc,gHc:gHc,qty:qty};
+var T=TY.find(function(t){return t.id===item.ct;});
+var ano=item.col==="a";
+function getW(code,thk){var pd=PD[code]||PD[rc(code)];if(!pd)return 0;var v=pickV(pd,thk);if(!v)return 0;return ano?v.a:v.p;}
+var hasMid=FS_MID[item.fsC]||false;
+var hr=gHR(item.ftC,item.fbC);
+var fsRW=FS_RW[item.fsC]||1.2;
+var rw=T.rw+(hasMid?0.3:0);
+var fW=rn(item.W-fsRW,2);
+var sW=rn((item.W-fsRW-rw)/T.dv,2);
+var sH=rn(item.H-hr.v,2);
+var sc=T.sc;var qty=item.qty;
+var wFT=getW(item.ftC,item.fThk),wFB=getW(item.fbC,item.fThk),wFS=getW(item.fsC,item.fThk);
+var wTop=getW("4014",item.sThk),wBot=getW("4015",item.sThk);
+var wKey=getW("4011",item.sThk),wHook=getW("4012",item.sThk),wDead=getW("4013",item.sThk);
+var wMid=getW("4016",item.sThk);
+var rows=[
+{n:"เฟรมบน",c:item.ftC,dim:fW,pcs:qty,w:wFT,cat:"f"},
+{n:"เฟรมล่าง",c:item.fbC,dim:fW,pcs:qty,w:wFB,cat:"f"},
+{n:"เฟรมข้าง",c:item.fsC,dim:item.H,pcs:2*qty,w:wFS,cat:"f"},
+{n:"ขวางบน",c:"4014",dim:sW,pcs:T.pn*qty,w:wTop,cat:"s"},
+{n:"ขวางล่าง",c:"4015",dim:sW,pcs:T.pn*qty,w:wBot,cat:"s"},
+];
+if(sc.k>0)rows.push({n:"เสากุญแจ",c:"4011",dim:sH,pcs:sc.k*qty,w:wKey,cat:"s"});
+if(sc.h>0)rows.push({n:"เสาเกี่ยว",c:"4012",dim:sH,pcs:sc.h*qty,w:wHook,cat:"s"});
+if(sc.d>0)rows.push({n:"เสาตาย",c:"4013",dim:sH,pcs:sc.d*qty,w:wDead,cat:"s"});
+if(item.fsC==="3013f")rows.push({n:"เฟรมข้าง (4003)",c:"4003",dim:item.H,pcs:2*qty,w:getW("4003",item.fThk),cat:"f"});
+if(hasMid)rows.push({n:"ชนกลาง (เฟรมข้าง)",c:"4016",dim:sH,pcs:qty,w:wMid,cat:"s"});
+if(sc.m&&sc.m>0){
+if(!hasMid)rows.push({n:"ชนกลาง (เสากุญแจ)",c:"4016",dim:sH,pcs:sc.m*qty,w:wMid,cat:"s"});
+else rows.push({n:"ชนกลาง (เสากุญแจ) ใช้เศษ",c:"4016",dim:sH,pcs:sc.m*qty,w:wMid,cat:"s",note:"ใช้เศษ"});
 }
-
+var gWc=rn(sW+1.3,2),gHc=rn(sH-8.0,2);
+return{cat:"slide",T:T,fW:fW,sW:sW,sH:sH,hr:hr,hasMid:hasMid,rw:rw,fsRW:fsRW,rows:rows,gWc:gWc,gHc:gHc,qty:qty};
+}
 function calcSwingItem(item){
-  var ano=item.col==="a";
-  function getW(code,thk){var pd=PD[code];if(!pd)return 0;var v=pd.v.find(function(x){return x.t===thk;})||pd.v[0];return ano?v.a:v.p;}
-  var W=item.W,H=item.H,qty=item.qty,isDouble=item.ct==="sw2";
-  var thk1=item.swThk1,thk2=item.swThk2;
-  var boxW=rn(W-9.0,2);
-  var poleH=rn(H-6.5,2);
-  var poleTopW=isDouble?rn((W-31.5)/2,2):rn(W-20.4,2);
-  var trimH=rn(H-19.6,2);
-  var trimW=isDouble?rn((W-31.5)/2,2):rn(W-20.4,2);
-  var nPole=isDouble?4:2,nPoleTop=isDouble?2:1,nTrim=isDouble?8:4;
-  var rows=[
-    {n:"กล่องเรียบ",c:"3013s",dim:H,pcs:2*qty,w:getW("3013s",thk1)},
-    {n:"กล่องแจ็คสัน",c:"3026",dim:boxW,pcs:qty,w:getW("3026",thk1)},
-    {n:"ฝาแจ็คสัน",c:"3027",dim:boxW,pcs:qty,w:getW("3027",thk1)},
-    {n:"ธรณีบานสวิง",c:"3067",dim:boxW,pcs:qty,w:getW("3067",thk1)},
-    {n:"เสาประตู",c:"3030",dim:poleH,pcs:nPole*qty,w:getW("3030",thk1)},
-    {n:"เสาประตูบน",c:"3031",dim:poleTopW,pcs:nPoleTop*qty,w:getW("3031",thk1)},
-    {n:"เสาประตูล่าง",c:"3032",dim:poleTopW,pcs:nPoleTop*qty,w:getW("3032",thk1)},
-    {n:"คิ้วประตู (สูง)",c:"3020",dim:trimH,pcs:nTrim*qty,w:getW("3020",thk2)},
-    {n:"คิ้วประตู (กว้าง)",c:"3020",dim:trimW,pcs:nTrim*qty,w:getW("3020",thk2)},
-  ];
-  var gWc=rn(poleTopW-1.0+(isDouble?-1.0:0),2);
-  var gHc=rn(poleH-14.0,2);
-  return{cat:"swing",rows:rows,W:W,H:H,boxW:boxW,poleH:poleH,poleTopW:poleTopW,trimH:trimH,trimW:trimW,isDouble:isDouble,qty:qty,gWc:gWc,gHc:gHc};
+var ano=item.col==="a";
+function getW(code,thk){var pd=PD[code];if(!pd)return 0;var v=pickV(pd,thk);if(!v)return 0;return ano?v.a:v.p;}
+var W=item.W,H=item.H,qty=item.qty,isDouble=item.ct==="sw2";
+var thk1=item.swThk1,thk2=item.swThk2;
+var boxW=rn(W-9.0,2);
+var poleH=rn(H-6.5,2);
+var poleTopW=isDouble?rn((W-31.5)/2,2):rn(W-20.4,2);
+var trimH=rn(H-19.6,2);
+var trimW=isDouble?rn((W-31.5)/2,2):rn(W-20.4,2);
+var nPole=isDouble?4:2,nPoleTop=isDouble?2:1,nTrim=isDouble?8:4;
+var rows=[
+{n:"กล่องเรียบ",c:"3013s",dim:H,pcs:2*qty,w:getW("3013s",thk1)},
+{n:"กล่องแจ็คสัน",c:"3026",dim:boxW,pcs:qty,w:getW("3026",thk1)},
+{n:"ฝาแจ็คสัน",c:"3027",dim:boxW,pcs:qty,w:getW("3027",thk1)},
+{n:"ธรณีบานสวิง",c:"3067",dim:boxW,pcs:qty,w:getW("3067",thk1)},
+{n:"เสาประตู",c:"3030",dim:poleH,pcs:nPole*qty,w:getW("3030",thk1)},
+{n:"เสาประตูบน",c:"3031",dim:poleTopW,pcs:nPoleTop*qty,w:getW("3031",thk1)},
+{n:"เสาประตูล่าง",c:"3032",dim:poleTopW,pcs:nPoleTop*qty,w:getW("3032",thk1)},
+{n:"คิ้วประตู (สูง)",c:"3020",dim:trimH,pcs:nTrim*qty,w:getW("3020",thk2)},
+{n:"คิ้วประตู (กว้าง)",c:"3020",dim:trimW,pcs:nTrim*qty,w:getW("3020",thk2)},
+];
+var gWc=rn(poleTopW-1.0+(isDouble?-1.0:0),2);
+var gHc=rn(poleH-14.0,2);
+return{cat:"swing",rows:rows,W:W,H:H,boxW:boxW,poleH:poleH,poleTopW:poleTopW,trimH:trimH,trimW:trimW,isDouble:isDouble,qty:qty,gWc:gWc,gHc:gHc};
 }
-
 function addItem(){
-  var W=parseFloat(g("W").value)||0,H=parseFloat(g("H").value)||0;
-  if(W<30||H<30){alert("กรุณากรอกขนาด");return;}
-  var iname=g("INAME").value||("ชุดที่ "+(ITEMS.length+1));
-  var isCatSwing=CT_CAT==="swing";
-  var T_cur=gT();var isCatLight=!isCatSwing&&T_cur&&T_cur.hasLight;
-  var item={
-    iname:iname,cat:CT_CAT,ct:isCatSwing?CT_SWING:CT,
-    W:W,H:H,qty:parseInt(g("QT").value)||1,
-    col:g("COL").value,colTxt:g("COL").options[g("COL").selectedIndex].text,
-    ftC:isCatSwing?"":g("sft").value,fbC:isCatSwing?"":g("sfb").value,fsC:isCatSwing?"":g("sfs").value,
-    fThk:isCatSwing?"":g("thF").value,sThk:isCatSwing?"":g("thS").value,
-    swThk1:isCatSwing?g("thSW1").value:"",swThk2:isCatSwing?g("thSW2").value:"",
-    swThk3:isCatSwing?g("thSW3").value:"",
-    swDoorH:(isCatSwing||isCatLight)?parseFloat(g("swDoorH").value)||0:0,
-    swLightH:(isCatSwing||isCatLight)?(parseFloat(g("H").value)||0)-(parseFloat(g("swDoorH").value)||0):0,
-    swMidType:(isCatSwing||isCatLight)?g("swMidType").value:"groove"
-  };
-  ITEMS.push(item);
-  renderItemList();
-  g("list-card").style.display="block";
-  g("btnc").style.display="block";
-  g("INAME").value="";
+var W=parseFloat(g("W").value)||0,H=parseFloat(g("H").value)||0;
+if(W<30||H<30){alert("กรุณากรอกขนาด");return;}
+var iname=g("INAME").value||("ชุดที่ "+(ITEMS.length+1));
+var isCatSwing=CT_CAT==="swing";
+var item={
+iname:iname,cat:CT_CAT,ct:isCatSwing?CT_SWING:CT,
+W:W,H:H,qty:parseInt(g("QT").value)||1,
+col:g("COL").value,colTxt:g("COL").options[g("COL").selectedIndex].text,
+ftC:isCatSwing?"":g("sft").value,fbC:isCatSwing?"":g("sfb").value,fsC:isCatSwing?"":g("sfs").value,
+fThk:isCatSwing?"":g("thF").value,sThk:isCatSwing?"":g("thS").value,
+swThk1:isCatSwing?g("thSW1").value:"",swThk2:isCatSwing?g("thSW2").value:""
+};
+ITEMS.push(item);
+renderItemList();
+g("list-card").style.display="block";
+g("btnc").style.display="block";
+g("INAME").value="";
 }
 function renderItemList(){
-  g("item-list").innerHTML=ITEMS.map(function(item,i){
-    var lbl=T_LABELS[item.ct]||item.ct;
-    return'<div class="item-row">'+
-      '<div class="item-no">'+(i+1)+'</div>'+
-      '<div class="item-info"><b>'+item.iname+'</b> - '+lbl+' '+item.W+'x'+item.H+' ซม. x'+item.qty+' ชุด | '+item.colTxt+'</div>'+
-      '<button class="item-del" data-i="'+i+'">ลบ</button></div>';
-  }).join("");
+g("item-list").innerHTML=ITEMS.map(function(item,i){
+var lbl=T_LABELS[item.ct]||item.ct;
+return'<div class="item-row">'+
+'<div class="item-no">'+(i+1)+'</div>'+
+'<div class="item-info"><b>'+item.iname+'</b> - '+lbl+' '+item.W+'x'+item.H+' ซม. x'+item.qty+' ชุด | '+item.colTxt+'</div>'+
+'<button class="item-del" data-i="'+i+'">ลบ</button></div>';
+}).join("");
 }
 function showPage(id){g("pg-in").classList.remove("show");g("pg-out").classList.remove("show");g(id).classList.add("show");window.scrollTo(0,0);}
 function showTab(t){["pc","pb","pg","pp"].forEach(function(x){g(x).style.display=x===t?"block":"none";});document.querySelectorAll("#ts .ta").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-t")===t);});}
-
 function calcAll(){
-  if(ITEMS.length===0){alert("กรุณาเพิ่มอย่างน้อย 1 รายการ");return;}
-  var ap=parseFloat(g("AP").value)||120;
-  var gp=parseFloat(g("GP").value)||23;
-  var jn=g("JN").value||"ไม่ระบุชื่องาน";
-  var gColTxt=g("GCOL").options[g("GCOL").selectedIndex].text;
-  var gThk=g("GTHK").value;
-  var allResults=ITEMS.map(function(item){
-    if(item.cat==="swing"){
-      if(item.ct==="sw1l"||item.ct==="sw2l")return calcSwingLightItem(item);
-      return calcSwingItem(item);
-    }
-    return calcSlideItem(item);
-  });
-
-  var piecesByCode={};
-  allResults.forEach(function(r){
-    r.rows.forEach(function(row){
-      if(row.note)return;
-      var k=rc(row.c)+"||"+(row.n||"");
-      if(!piecesByCode[k])piecesByCode[k]={c:rc(row.c),n:row.n,w:row.w,pieces:[]};
-      piecesByCode[k].pieces.push({dim:row.dim,qty:row.pcs});
-    });
-  });
-  Object.keys(piecesByCode).forEach(function(k){piecesByCode[k].nb=calcBars(piecesByCode[k].pieces);});
-
-  var totKg=0;
-  Object.keys(piecesByCode).forEach(function(k){totKg+=piecesByCode[k].nb*piecesByCode[k].w;});
-  totKg=rn(totKg,2);
-  var alCost=rn(totKg*ap,0);
-
-  var totGlass=0;
-  allResults.forEach(function(r,idx){
-    if(ITEMS[idx].cat==="swing"){
-      totGlass+=(r.gWc/2.54)*(r.gHc/2.54)/144*r.qty;
-      return;
-    }
-    totGlass+=(r.gWc/2.54)*(r.gHc/2.54)/144*r.T.sl*r.qty;
-  });
-  totGlass=rn(totGlass,2);
-  var gCostTotal=rn(totGlass*gp,0);
-  var totQty=ITEMS.reduce(function(s,item){return s+item.qty;},0);
-
-  g("out-jn").textContent=jn;
-  g("out-sub").textContent=ITEMS.length+" รายการ | "+totQty+" ชุดรวม";
-  g("ms").innerHTML=
-    '<div class="me"><div class="ml">งาน</div><div class="mv">'+jn+'</div><div class="mb">'+ITEMS.length+' รายการ</div></div>'+
-    '<div class="me"><div class="ml">น้ำหนักอลูมิเนียม</div><div class="mv">'+fm(totKg,2)+' กก.</div><div class="mb">฿'+fm(alCost)+'</div></div>'+
-    '<div class="me"><div class="ml">กระจก '+gColTxt+'</div><div class="mv">'+fm(totGlass,2)+' ตร.ฟุต</div><div class="mb">฿'+fm(gCostTotal)+'</div></div>'+
-    '<div class="me"><div class="ml">รวมทั้งหมด</div><div class="mv">฿'+fm(alCost+gCostTotal)+'</div><div class="mb">&nbsp;</div></div>';
-
-  var ch='<div class="st">รายการตัดแยกตามชุด</div>';
-  ITEMS.forEach(function(item,idx){
-    var r=allResults[idx];var lbl=T_LABELS[item.ct]||item.ct;
-    ch+='<div class="item-header">'+item.iname+' - '+lbl+' '+item.W+'x'+item.H+' ซม. x'+item.qty+' ชุด | '+item.colTxt+'</div>';
-    if(r.cat==="slide"){
-      ch+='<div class="fb2"><b>เฟรมบน-ล่าง</b> = <b>'+r.fW+' ซม.</b> | <b>ขวาง</b> = <b>'+r.sW+' ซม./บาน</b> | <b>เสา</b> = <b>'+r.sH+' ซม.</b> | <b>กระจก</b> = <b>'+rn(r.gWc/2.54,2)+'x'+rn(r.gHc/2.54,2)+' นิ้ว</b>'+(r.hasMid?' | มีชนกลาง':'')+'</div>';
-    } else {
-      var swInfo='<b>กล่องแจ็คสัน/ธรณี</b> = <b>'+r.boxW+' ซม.</b> | <b>เสาประตู</b> = <b>'+r.poleH+' ซม.</b> | <b>เสาบน-ล่าง</b> = <b>'+r.poleTopW+' ซม.</b>';
-      if(r.hasLight)swInfo+=' | <b>ช่องแสง</b> = <b>'+r.lightH+' ซม.</b> | <b>คิ้วลอยตั้ง</b> = <b>'+(r.lightH-4.5)+' ซม.</b>';
-      ch+='<div class="fb2">'+swInfo+'</div>';
-    }
-    ch+='<table><thead><tr><th style="width:25%">เส้น</th><th style="width:35%">ชื่อ</th><th>ยาว(ซม.)</th><th>ชิ้นรวม</th></tr></thead><tbody>';
-    r.rows.forEach(function(row){
-      var nm=PD[row.c]?PD[row.c].n:row.c;
-      var noteStr=row.note?' <span style="color:#28a745;font-size:12px">('+row.note+')</span>':'';
-      ch+='<tr><td><b>'+row.n+'</b>'+noteStr+'</td><td style="font-size:13px;color:#555">'+nm+'</td><td><b>'+fm(row.dim,2)+'</b></td><td>'+row.pcs+'</td></tr>';
-    });
-    ch+='</tbody></table><br>';
-  });
-  g("pc").innerHTML=ch;
-
-  var bh='<div class="st">สรุปเส้นที่ต้องซื้อทั้งงาน</div>'+
-    '<table><thead><tr><th style="width:25%">รายการ</th><th style="width:35%">ชื่อเส้น</th><th>จำนวนเส้น</th><th>น้ำหนัก/เส้น</th><th>น้ำหนักรวม(กก.)</th><th>ราคา(บาท)</th></tr></thead><tbody>';
-  var sB=0,sK=0,sC=0;
-  Object.keys(piecesByCode).forEach(function(k){
-    var gg=piecesByCode[k];var tw=rn(gg.nb*gg.w,2);var cost=rn(tw*ap,0);sB+=gg.nb;sK+=tw;sC+=cost;
-    var nm=PD[gg.c]?PD[gg.c].n:gg.c;
-    bh+='<tr><td><b>'+gg.n+'</b></td><td style="font-size:13px;color:#555">'+nm+'</td><td><b style="color:#1860a8">'+gg.nb+' เส้น</b></td><td>'+gg.w+' กก.</td><td>'+fm(tw,2)+'</td><td>฿'+fm(cost)+'</td></tr>';
-  });
-  bh+='</tbody><tfoot><tr class="tfr"><td colspan="2">รวมทั้งหมด</td><td><b>'+sB+' เส้น</b></td><td></td><td><b>'+fm(rn(sK,2),2)+' กก.</b></td><td><b>฿'+fm(rn(sC,0))+'</b></td></tr></tfoot></table>';
-  g("pb").innerHTML=bh;
-
-  var gh='<div class="st">กระจก '+gColTxt+' '+gThk+' มม.</div>';
-  ITEMS.forEach(function(item,idx){
-    if(item.cat==="swing"){
-      var r2=allResults[idx];
-      var gWi2=rn(r2.gWc/2.54,2),gHi2=rn(r2.gHc/2.54,2);
-      var best2=fBest(r2.gWc,r2.gHc,1,gp);
-      gh+='<div class="item-header">'+item.iname+' - '+T_LABELS[item.ct]+' '+item.W+'x'+item.H+' ซม. x'+item.qty+' ชุด</div>';
-      gh+='<div class="fb2"><b>กระจก/บาน:</b> '+gWi2+'x'+gHi2+' นิ้ว ('+rn(gWi2*gHi2,1)+' ตร.นิ้ว)<br>กว้าง = เสาบน-ล่าง'+(r2.isDouble?' - 2.0':' - 1.0')+' = '+r2.gWc+' ซม. | สูง = เสาประตู - 14.0 = '+r2.gHc+' ซม.</div>';
-      if(best2)gh+='<div class="gb">แนะนำ: <b>'+best2.w+'x'+best2.h+' นิ้ว</b> '+best2.m+' x'+item.qty+' = <b>฿'+fm(best2.c*item.qty)+'</b></div>';
-      var seen2=[];
-      GS.forEach(function(sz){[[sz[0],sz[1]],[sz[1],sz[0]]].forEach(function(o){
-        if(o[0]>=gWi2&&o[1]>=gHi2){var lb=o[0]+"x"+o[1]+"s";if(seen2.indexOf(lb)<0){seen2.push(lb);var c=rn((o[0]*o[1]/144)*gp*item.qty,0);var ib=best2&&best2.w===o[0]&&best2.h===o[1]&&c===rn(best2.c*item.qty,0);gh+='<div class="go'+(ib?" gb":"")+'">'+o[0]+'x'+o[1]+' นิ้ว x'+item.qty+' = ฿'+fm(c)+'</div>';}}
-      });});
-      gh+='<br>';
-      return;
-    }
-    var r=allResults[idx];var ns=r.T.sl;var qty=r.qty;
-    var gWi=rn(r.gWc/2.54,2),gHi=rn(r.gHc/2.54,2);
-    var best=fBest(r.gWc,r.gHc,ns,gp);
-    gh+='<div class="item-header">'+item.iname+' - '+gWi+'x'+gHi+' นิ้ว | '+ns+' บาน x'+qty+' ชุด</div>';
-    if(best)gh+='<div class="gb">แนะนำ: <b>'+best.w+'x'+best.h+' นิ้ว</b> '+best.m+' x'+qty+' = <b>฿'+fm(best.c*qty)+'</b></div>';
-    var seen=[];
-    GS.forEach(function(sz){[[sz[0],sz[1]],[sz[1],sz[0]]].forEach(function(o){
-      if(o[0]>=gWi&&o[1]>=gHi){var lb=o[0]+"x"+o[1]+"s";if(seen.indexOf(lb)<0){seen.push(lb);var c=rn((o[0]*o[1]/144)*gp*ns*qty,0);var ib=best&&best.w===o[0]&&best.h===o[1]&&best.m.indexOf("แยก")>=0&&c===rn(best.c*qty,0);gh+='<div class="go'+(ib?" gb":"")+'">'+o[0]+'x'+o[1]+' แยก '+ns+' แผ่น x'+qty+' = ฿'+fm(c)+'</div>';}}
-      if(ns>=2){if(o[0]>=gWi*ns&&o[1]>=gHi){var lb2=o[0]+"x"+o[1]+"h";if(seen.indexOf(lb2)<0){seen.push(lb2);var c=rn((o[0]*o[1]/144)*gp*qty,0);var ib=best&&best.w===o[0]&&best.h===o[1]&&best.m.indexOf("นอน")>=0&&c===rn(best.c*qty,0);gh+='<div class="go'+(ib?" gb":"")+'">'+o[0]+'x'+o[1]+' แผ่นเดียวแนวนอน x'+qty+' = ฿'+fm(c)+'</div>';}}if(o[0]>=gWi&&o[1]>=gHi*ns){var lb3=o[0]+"x"+o[1]+"v";if(seen.indexOf(lb3)<0){seen.push(lb3);var c=rn((o[0]*o[1]/144)*gp*qty,0);var ib=best&&best.w===o[0]&&best.h===o[1]&&best.m.indexOf("ตั้ง")>=0&&c===rn(best.c*qty,0);gh+='<div class="go'+(ib?" gb":"")+'">'+o[0]+'x'+o[1]+' แผ่นเดียวแนวตั้ง x'+qty+' = ฿'+fm(c)+'</div>';}}}
-    });});
-    gh+='<br>';
-  });
-  g("pg").innerHTML=gh;
-
-  var ph='<div class="st">ราคารวมทั้งงาน</div><div style="font-size:19px;font-weight:700;margin-bottom:14px">'+jn+'</div>';
-  ITEMS.forEach(function(item,idx){
-    var r=allResults[idx];var lbl=T_LABELS[item.ct]||item.ct;
-    var best=r.cat==="slide"?fBest(r.gWc,r.gHc,r.T.sl,gp):fBest(r.gWc,r.gHc,1,gp);
-    var gc=best?rn(best.c*item.qty,0):0;
-    ph+='<div class="pr"><span><b>'+item.iname+'</b> | '+lbl+' '+item.W+'x'+item.H+' x'+item.qty+'ชุด</span><span>กระจก ฿'+fm(gc)+'</span></div>';
-  });
-  ph+='<div class="tr2"><span style="font-weight:700;font-size:18px">รวมอลูมิเนียม</span><span style="font-size:21px;font-weight:700">฿'+fm(alCost)+'</span></div>';
-  ph+='<div class="tr2"><span style="font-weight:700;font-size:18px">รวมกระจก</span><span style="font-size:21px;font-weight:700">฿'+fm(gCostTotal)+'</span></div>';
-  ph+='<div class="tr2" style="border-top:3px solid #1860a8"><span style="font-weight:700;font-size:21px">รวมทั้งหมด</span><span style="font-size:30px;font-weight:700;color:#1860a8">฿'+fm(alCost+gCostTotal)+'</span></div>';
-  g("pp").innerHTML=ph;
-  showTab("pc");showPage("pg-out");
+if(ITEMS.length===0){alert("กรุณาเพิ่มอย่างน้อย 1 รายการ");return;}
+var ap=parseFloat(g("AP").value)||120;
+var gp=parseFloat(g("GP").value)||23;
+var jn=g("JN").value||"ไม่ระบุชื่องาน";
+var gColTxt=g("GCOL").options[g("GCOL").selectedIndex].text;
+var gThk=g("GTHK").value;
+var allResults=ITEMS.map(function(item){
+if(item.cat==="swing")return calcSwingItem(item);
+return calcSlideItem(item);
+});
+var piecesByCode={};
+allResults.forEach(function(r){
+r.rows.forEach(function(row){
+if(row.note)return;
+var k=rc(row.c)+"||"+(row.n||"");
+if(!piecesByCode[k])piecesByCode[k]={c:rc(row.c),n:row.n,w:row.w,pieces:[]};
+piecesByCode[k].pieces.push({dim:row.dim,qty:row.pcs});
+});
+});
+Object.keys(piecesByCode).forEach(function(k){piecesByCode[k].nb=calcBars(piecesByCode[k].pieces);});
+var totKg=0;
+Object.keys(piecesByCode).forEach(function(k){totKg+=piecesByCode[k].nb*piecesByCode[k].w;});
+totKg=rn(totKg,2);
+var alCost=rn(totKg*ap,0);
+var totGlass=0;
+allResults.forEach(function(r,idx){
+if(ITEMS[idx].cat==="swing"){
+totGlass+=(r.gWc/2.54)*(r.gHc/2.54)/144*r.qty;
+return;
 }
-
-g("tg").addEventListener("click",function(e){var b=e.target.closest("[data-ty]");if(!b)return;CT=b.getAttribute("data-ty");bTG();uDg();rHint();updLightH();});
+totGlass+=(r.gWc/2.54)*(r.gHc/2.54)/144*r.T.sl*r.qty;
+});
+totGlass=rn(totGlass,2);
+var gCostTotal=rn(totGlass*gp,0);
+var totQty=ITEMS.reduce(function(s,item){return s+item.qty;},0);
+g("out-jn").textContent=jn;
+g("out-sub").textContent=ITEMS.length+" รายการ | "+totQty+" ชุดรวม";
+g("ms").innerHTML=
+'<div class="me"><div class="ml">งาน</div><div class="mv">'+jn+'</div><div class="mb">'+ITEMS.length+' รายการ</div></div>'+
+'<div class="me"><div class="ml">น้ำหนักอลูมิเนียม</div><div class="mv">'+fm(totKg,2)+' กก.</div><div class="mb">฿'+fm(alCost)+'</div></div>'+
+'<div class="me"><div class="ml">กระจก '+gColTxt+'</div><div class="mv">'+fm(totGlass,2)+' ตร.ฟุต</div><div class="mb">฿'+fm(gCostTotal)+'</div></div>'+
+'<div class="me"><div class="ml">รวมทั้งหมด</div><div class="mv">฿'+fm(alCost+gCostTotal)+'</div><div class="mb">&nbsp;</div></div>';
+var ch='<div class="st">รายการตัดแยกตามชุด</div>';
+ITEMS.forEach(function(item,idx){
+var r=allResults[idx];var lbl=T_LABELS[item.ct]||item.ct;
+ch+='<div class="item-header">'+item.iname+' - '+lbl+' '+item.W+'x'+item.H+' ซม. x'+item.qty+' ชุด | '+item.colTxt+'</div>';
+if(r.cat==="slide"){
+ch+='<div class="fb2"><b>เฟรมบน-ล่าง</b> = <b>'+r.fW+' ซม.</b> | <b>ขวาง</b> = <b>'+r.sW+' ซม./บาน</b> | <b>เสา</b> = <b>'+r.sH+' ซม.</b> | <b>กระจก</b> = <b>'+rn(r.gWc/2.54,2)+'x'+rn(r.gHc/2.54,2)+' นิ้ว</b>'+(r.hasMid?' | มีชนกลาง':'')+'</div>';
+} else {
+ch+='<div class="fb2"><b>กล่องแจ็คสัน/ธรณี</b> = <b>'+r.boxW+' ซม.</b> | <b>เสาประตู</b> = <b>'+r.poleH+' ซม.</b> | <b>เสาบน-ล่าง</b> = <b>'+r.poleTopW+' ซม.</b></div>';
+}
+ch+='<table><thead><tr><th style="width:25%">เส้น</th><th style="width:35%">ชื่อ</th><th>ยาว(ซม.)</th><th>ชิ้นรวม</th></tr></thead><tbody>';
+r.rows.forEach(function(row){
+var nm=PD[row.c]?PD[row.c].n:row.c;
+var noteStr=row.note?' <span style="color:#28a745;font-size:12px">('+row.note+')</span>':'';
+ch+='<tr><td><b>'+row.n+'</b>'+noteStr+'</td><td style="font-size:13px;color:#6b7280">'+nm+'</td><td><b>'+fm(row.dim,2)+'</b></td><td>'+row.pcs+'</td></tr>';
+});
+ch+='</tbody></table><br>';
+});
+g("pc").innerHTML=ch;
+var bh='<div class="st">สรุปเส้นที่ต้องซื้อทั้งงาน</div>'+
+'<table><thead><tr><th style="width:25%">รายการ</th><th style="width:35%">ชื่อเส้น</th><th>จำนวนเส้น</th><th>น้ำหนัก/เส้น</th><th>น้ำหนักรวม(กก.)</th><th>ราคา(บาท)</th></tr></thead><tbody>';
+var sB=0,sK=0,sC=0;
+Object.keys(piecesByCode).forEach(function(k){
+var gg=piecesByCode[k];var tw=rn(gg.nb*gg.w,2);var cost=rn(tw*ap,0);sB+=gg.nb;sK+=tw;sC+=cost;
+var nm=PD[gg.c]?PD[gg.c].n:gg.c;
+bh+='<tr><td><b>'+gg.n+'</b></td><td style="font-size:13px;color:#6b7280">'+nm+'</td><td><b style="color:#1860a8">'+gg.nb+' เส้น</b></td><td>'+gg.w+' กก.</td><td>'+fm(tw,2)+'</td><td>฿'+fm(cost)+'</td></tr>';
+});
+bh+='</tbody><tfoot><tr class="tfr"><td colspan="2">รวมทั้งหมด</td><td><b>'+sB+' เส้น</b></td><td></td><td><b>'+fm(rn(sK,2),2)+' กก.</b></td><td><b>฿'+fm(rn(sC,0))+'</b></td></tr></tfoot></table>';
+g("pb").innerHTML=bh;
+var gh='<div class="st">กระจก '+gColTxt+' '+gThk+' มม.</div>';
+ITEMS.forEach(function(item,idx){
+if(item.cat==="swing"){
+var r2=allResults[idx];
+var gWi2=rn(r2.gWc/2.54,2),gHi2=rn(r2.gHc/2.54,2);
+var best2=fBest(r2.gWc,r2.gHc,1,gp);
+gh+='<div class="item-header">'+item.iname+' - '+T_LABELS[item.ct]+' '+item.W+'x'+item.H+' ซม. x'+item.qty+' ชุด</div>';
+gh+='<div class="fb2"><b>กระจก/บาน:</b> '+gWi2+'x'+gHi2+' นิ้ว ('+rn(gWi2*gHi2,1)+' ตร.นิ้ว)<br>กว้าง = เสาบน-ล่าง'+(r2.isDouble?' - 2.0':' - 1.0')+' = '+r2.gWc+' ซม. | สูง = เสาประตู - 14.0 = '+r2.gHc+' ซม.</div>';
+if(best2)gh+='<div class="gb">แนะนำ: <b>'+best2.w+'x'+best2.h+' นิ้ว</b> '+best2.m+' x'+item.qty+' = <b>฿'+fm(best2.c*item.qty)+'</b></div>';
+var seen2=[];
+GS.forEach(function(sz){[[sz[0],sz[1]],[sz[1],sz[0]]].forEach(function(o){
+if(o[0]>=gWi2&&o[1]>=gHi2){var lb=o[0]+"x"+o[1]+"s";if(seen2.indexOf(lb)<0){seen2.push(lb);var c=rn((o[0]*o[1]/144)*gp*item.qty,0);var ib=best2&&best2.w===o[0]&&best2.h===o[1]&&c===rn(best2.c*item.qty,0);gh+='<div class="go'+(ib?" gb":"")+'">'+o[0]+'x'+o[1]+' นิ้ว x'+item.qty+' = ฿'+fm(c)+'</div>';}}
+});});
+gh+='<br>';
+return;
+}
+var r=allResults[idx];var ns=r.T.sl;var qty=r.qty;
+var gWi=rn(r.gWc/2.54,2),gHi=rn(r.gHc/2.54,2);
+var best=fBest(r.gWc,r.gHc,ns,gp);
+gh+='<div class="item-header">'+item.iname+' - '+gWi+'x'+gHi+' นิ้ว | '+ns+' บาน x'+qty+' ชุด</div>';
+if(best)gh+='<div class="gb">แนะนำ: <b>'+best.w+'x'+best.h+' นิ้ว</b> '+best.m+' x'+qty+' = <b>฿'+fm(best.c*qty)+'</b></div>';
+var seen=[];
+GS.forEach(function(sz){[[sz[0],sz[1]],[sz[1],sz[0]]].forEach(function(o){
+if(o[0]>=gWi&&o[1]>=gHi){var lb=o[0]+"x"+o[1]+"s";if(seen.indexOf(lb)<0){seen.push(lb);var c=rn((o[0]*o[1]/144)*gp*ns*qty,0);var ib=best&&best.w===o[0]&&best.h===o[1]&&best.m.indexOf("แยก")>=0&&c===rn(best.c*qty,0);gh+='<div class="go'+(ib?" gb":"")+'">'+o[0]+'x'+o[1]+' แยก '+ns+' แผ่น x'+qty+' = ฿'+fm(c)+'</div>';}}
+if(ns>=2){if(o[0]>=gWi*ns&&o[1]>=gHi){var lb2=o[0]+"x"+o[1]+"h";if(seen.indexOf(lb2)<0){seen.push(lb2);var c=rn((o[0]*o[1]/144)*gp*qty,0);var ib=best&&best.w===o[0]&&best.h===o[1]&&best.m.indexOf("นอน")>=0&&c===rn(best.c*qty,0);gh+='<div class="go'+(ib?" gb":"")+'">'+o[0]+'x'+o[1]+' แผ่นเดียวแนวนอน x'+qty+' = ฿'+fm(c)+'</div>';}}if(o[0]>=gWi&&o[1]>=gHi*ns){var lb3=o[0]+"x"+o[1]+"v";if(seen.indexOf(lb3)<0){seen.push(lb3);var c=rn((o[0]*o[1]/144)*gp*qty,0);var ib=best&&best.w===o[0]&&best.h===o[1]&&best.m.indexOf("ตั้ง")>=0&&c===rn(best.c*qty,0);gh+='<div class="go'+(ib?" gb":"")+'">'+o[0]+'x'+o[1]+' แผ่นเดียวแนวตั้ง x'+qty+' = ฿'+fm(c)+'</div>';}}}
+});});
+gh+='<br>';
+});
+g("pg").innerHTML=gh;
+var ph='<div class="st">ราคารวมทั้งงาน</div><div style="font-size:18px;font-weight:600;margin-bottom:14px">'+jn+'</div>';
+ITEMS.forEach(function(item,idx){
+var r=allResults[idx];var lbl=T_LABELS[item.ct]||item.ct;
+var best=r.cat==="slide"?fBest(r.gWc,r.gHc,r.T.sl,gp):fBest(r.gWc,r.gHc,1,gp);
+var gc=best?rn(best.c*item.qty,0):0;
+ph+='<div class="pr"><span><b>'+item.iname+'</b> | '+lbl+' '+item.W+'x'+item.H+' x'+item.qty+'ชุด</span><span>กระจก ฿'+fm(gc)+'</span></div>';
+});
+ph+='<div class="tr2"><span style="font-weight:600;font-size:16px">รวมอลูมิเนียม</span><span style="font-size:19px;font-weight:600">฿'+fm(alCost)+'</span></div>';
+ph+='<div class="tr2"><span style="font-weight:600;font-size:16px">รวมกระจก</span><span style="font-size:19px;font-weight:600">฿'+fm(gCostTotal)+'</span></div>';
+ph+='<div class="tr2" style="border-top:2px solid #1860a8"><span style="font-weight:600;font-size:18px">รวมทั้งหมด</span><span style="font-size:26px;font-weight:700;color:#1860a8">฿'+fm(alCost+gCostTotal)+'</span></div>';
+g("pp").innerHTML=ph;
+showTab("pc");showPage("pg-out");
+}
+g("tg").addEventListener("click",function(e){var b=e.target.closest("[data-ty]");if(!b)return;CT=b.getAttribute("data-ty");bTG();uDg();rHint();});
 g("tg-swing").addEventListener("click",function(e){var b=e.target.closest("[data-sw]");if(!b)return;CT_SWING=b.getAttribute("data-sw");bTGSwing();updSwingInfo();});
 g("ts").addEventListener("click",function(e){var b=e.target.closest("[data-t]");if(!b)return;showTab(b.getAttribute("data-t"));});
 g("item-list").addEventListener("click",function(e){var b=e.target.closest("[data-i]");if(!b)return;ITEMS.splice(parseInt(b.getAttribute("data-i")),1);renderItemList();if(ITEMS.length===0){g("list-card").style.display="none";g("btnc").style.display="none";}});
@@ -842,18 +747,9 @@ g("thS").addEventListener("change",updSashInfo);
 g("COL").addEventListener("change",function(){updFrameInfo();updSashInfo();updSwingInfo();});
 g("thSW1").addEventListener("change",updSwingInfo);
 g("thSW2").addEventListener("change",updSwingInfo);
-// W,H listeners now use oninput attribute
-
-function updLightH(){
-  var H=parseFloat(g("H").value)||0;
-  var dH=parseFloat(g("swDoorH")?g("swDoorH").value:0)||0;
-  var lH=g("swLightH");
-  if(lH)lH.value=dH>0&&H>0?Math.round((H-dH)*10)/10:"";
-}
 window.addEventListener("DOMContentLoaded",function(){
 fillFrameSels();bTG();bTGSwing();uDg();updFrameThick();updSashThick();updSwingThick();rHint();
 });
-
 </script>
 </body>
 </html>
